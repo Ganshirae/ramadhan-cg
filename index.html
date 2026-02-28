@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Doa Ramadhan – Sahur & Buka Puasa</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Lateef:wght@400;700&family=Playfair+Display:wght@600;700&family=Nunito:wght@400;500;600&display=swap"
+        rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans:    ['Nunito', 'sans-serif'],
+            serif:   ['Playfair Display', 'serif'],
+            arabic:  ['Lateef', 'Amiri', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+
+<body class="bg-green-950 text-amber-50 font-sans antialiased overflow-x-hidden">
+
+  <!-- ========== STARFIELD ========== -->
+  <div id="stars" class="fixed inset-0 pointer-events-none z-0" aria-hidden="true"></div>
+
+  <!-- ========== HEADER (component) ========== -->
+  <!-- components/header.html -->
+  <header class="relative z-10 py-12 px-4 text-center overflow-hidden">
+
+    <!-- Decorative ring -->
+    <div class="absolute inset-0 flex items-center justify-center pointer-events-none" aria-hidden="true">
+      <div class="w-[600px] h-[600px] rounded-full border border-yellow-600/10 scale-75 -translate-y-1/2"></div>
+    </div>
+
+    <!-- Crescent Moon -->
+    <div class="relative inline-block mb-4 animate-fade-in" aria-hidden="true">
+      <svg width="64" height="64" viewBox="0 0 64 64" fill="none"
+           class="mx-auto drop-shadow-[0_0_12px_rgba(201,169,74,0.8)]">
+        <path d="M48 32c0 13.255-10.745 24-24 24C10.745 56 0 45.255 0 32S10.745
+                 8 24 8c-2.21 3.89-3.5 8.393-3.5 13.2C20.5 35.46 31.04 46 44.3
+                 46A24.2 24.2 0 0 0 48 45.7 23.9 23.9 0 0 0 48 32z"
+              fill="#c9a94a"/>
+      </svg>
+    </div>
+
+    <!-- Bismillah -->
+    <p class="arabic-text text-yellow-400/80 text-xl tracking-wide mb-2 animate-fade-in"
+       style="animation-delay:.2s; direction:rtl; text-align:center;" lang="ar">
+      بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ
+    </p>
+
+    <!-- Title -->
+    <h1 class="font-serif text-4xl md:text-6xl font-bold text-amber-50 animate-fade-up"
+        style="animation-delay:.3s">
+      Doa <span class="text-yellow-400">Ramadhan</span>
+    </h1>
+
+    <!-- Subtitle -->
+    <p class="mt-3 text-amber-50/60 text-sm md:text-base max-w-md mx-auto animate-fade-up"
+       style="animation-delay:.4s">
+      Kumpulan doa sahur &amp; buka puasa untuk menemani ibadahmu di bulan suci
+    </p>
+
+    <!-- Navigation Quick-Jump -->
+    <nav class="mt-8 flex justify-center gap-4 animate-fade-up"
+         style="animation-delay:.5s"
+         aria-label="Navigasi halaman doa">
+      <a href="#sahur"
+         class="px-6 py-2 rounded-full border border-yellow-500/40 text-yellow-400 text-sm
+                font-semibold hover:bg-yellow-400 hover:text-green-950 transition-all duration-300">
+        🌙 Sahur
+      </a>
+      <a href="#buka-puasa"
+         class="px-6 py-2 rounded-full border border-green-500/40 text-green-400 text-sm
+                font-semibold hover:bg-green-700 hover:text-amber-50 transition-all duration-300">
+        🌅 Buka Puasa
+      </a>
+    </nav>
+  </header>
+  <!-- /header component -->
+
+
+  <!-- ========== MAIN ========== -->
+  <main class="relative z-10 max-w-5xl mx-auto px-4 pb-20 space-y-20">
+
+
+    <!-- ====================================================
+         SECTION: SAHUR
+         ==================================================== -->
+    <section id="sahur" aria-labelledby="sahur-title" class="reveal">
+
+      <!-- Section Header Banner -->
+      <div class="mesh-sahur rounded-3xl p-8 md:p-12 mb-8 relative overflow-hidden border border-yellow-500/20">
+
+        <!-- Lantern Left -->
+        <div class="absolute top-0 right-8 animate-lantern" aria-hidden="true">
+          <div class="lantern-string">
+            <div class="w-8 h-12 bg-yellow-400/20 border border-yellow-400/40 rounded-b-full mx-auto flex items-center justify-center">
+              <div class="w-3 h-3 rounded-full bg-yellow-400/60"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Lantern Right -->
+        <div class="absolute top-0 left-12 animate-lantern" style="animation-delay:1s" aria-hidden="true">
+          <div class="lantern-string">
+            <div class="w-6 h-9 bg-green-700/30 border border-green-500/50 rounded-b-full mx-auto flex items-center justify-center">
+              <div class="w-2 h-2 rounded-full bg-green-400/80"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Badge -->
+        <div class="section-badge inline-block bg-yellow-400 px-6 py-1 text-green-950
+                    text-xs font-bold tracking-widest uppercase mb-4">
+          Sahur
+        </div>
+
+        <h2 id="sahur-title" class="font-serif text-3xl md:text-4xl font-bold text-amber-50">
+          🌙 Doa <span class="text-yellow-400">Sahur</span>
+        </h2>
+        <p class="text-amber-50/60 mt-2 text-sm md:text-base">
+          Doa yang dibaca sebelum memulai puasa di waktu sahur
+        </p>
+      </div>
+
+      <!-- Grid Doa Sahur -->
+      <div class="grid gap-6 md:grid-cols-2">
+
+        <!-- Doa Sahur 01 – Niat Puasa -->
+        <article class="doa-card bg-green-900/60 border border-yellow-500/20 rounded-2xl p-6 reveal"
+                 aria-label="Doa Niat Puasa Ramadhan">
+          <div class="flex items-center gap-3 mb-5">
+            <span class="w-9 h-9 rounded-full bg-yellow-400/10 border border-yellow-400/30
+                         flex items-center justify-center text-yellow-400 text-sm font-bold">
+              01
+            </span>
+            <h3 class="font-serif text-lg text-yellow-400 font-semibold">Niat Puasa Ramadhan</h3>
+          </div>
+
+          <p class="arabic-text text-amber-50/90 text-2xl md:text-3xl mb-5" lang="ar">
+            نَوَيْتُ صَوْمَ غَدٍ عَنْ أَدَاءِ فَرْضِ شَهْرِ رَمَضَانَ هٰذِهِ السَّنَةِ لِلّٰهِ تَعَالٰى
+          </p>
+
+          <div class="border-t border-yellow-500/10 pt-4 space-y-2">
+            <p class="text-amber-50/70 text-sm italic leading-relaxed">
+              <span class="text-yellow-400/80 font-semibold not-italic">Latin:</span>
+              Nawaitu shauma ghadin 'an adā'i fardhi syahri Ramadhāna hādzihis sanati lillāhi ta'ālā.
+            </p>
+            <p class="text-amber-50/60 text-sm leading-relaxed">
+              <span class="text-green-400 font-semibold">Artinya:</span>
+              "Aku berniat berpuasa esok hari untuk menunaikan fardhu bulan Ramadhan tahun ini karena Allah Ta'ala."
+            </p>
+          </div>
+        </article>
+
+        <!-- Doa Sahur 02 – Sebelum Makan -->
+        <article class="doa-card bg-green-900/60 border border-yellow-500/20 rounded-2xl p-6 reveal"
+                 style="transition-delay:.1s"
+                 aria-label="Doa Sebelum Makan Sahur">
+          <div class="flex items-center gap-3 mb-5">
+            <span class="w-9 h-9 rounded-full bg-yellow-400/10 border border-yellow-400/30
+                         flex items-center justify-center text-yellow-400 text-sm font-bold">
+              02
+            </span>
+            <h3 class="font-serif text-lg text-yellow-400 font-semibold">Sebelum Makan Sahur</h3>
+          </div>
+
+          <p class="arabic-text text-amber-50/90 text-2xl md:text-3xl mb-5" lang="ar">
+            اَللّٰهُمَّ بَارِكْ لَنَا فِيْمَا رَزَقْتَنَا وَقِنَا عَذَابَ النَّارِ
+          </p>
+
+          <div class="border-t border-yellow-500/10 pt-4 space-y-2">
+            <p class="text-amber-50/70 text-sm italic leading-relaxed">
+              <span class="text-yellow-400/80 font-semibold not-italic">Latin:</span>
+              Allāhumma bārik lanā fīmā razaqtanā waqinā 'adzāban nār.
+            </p>
+            <p class="text-amber-50/60 text-sm leading-relaxed">
+              <span class="text-green-400 font-semibold">Artinya:</span>
+              "Ya Allah, berkahilah kami dalam rezeki yang telah Engkau berikan dan lindungilah kami dari azab neraka."
+            </p>
+          </div>
+        </article>
+
+        <!-- Doa Sahur 03 – Setelah Makan (full width) -->
+        <article class="doa-card bg-green-900/60 border border-yellow-500/20 rounded-2xl p-6 md:col-span-2 reveal"
+                 style="transition-delay:.2s"
+                 aria-label="Doa Setelah Makan Sahur">
+          <div class="flex items-center gap-3 mb-5">
+            <span class="w-9 h-9 rounded-full bg-yellow-400/10 border border-yellow-400/30
+                         flex items-center justify-center text-yellow-400 text-sm font-bold">
+              03
+            </span>
+            <h3 class="font-serif text-lg text-yellow-400 font-semibold">Setelah Makan Sahur</h3>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6">
+            <p class="arabic-text text-amber-50/90 text-2xl md:text-3xl" lang="ar">
+              اَلْحَمْدُ لِلّٰهِ الَّذِيْ أَطْعَمَنَا وَسَقَانَا وَجَعَلَنَا مِنَ الْمُسْلِمِيْنَ
+            </p>
+            <div class="border-t md:border-t-0 md:border-l border-yellow-500/10 pt-4 md:pt-0 md:pl-6 flex flex-col justify-center space-y-2">
+              <p class="text-amber-50/70 text-sm italic leading-relaxed">
+                <span class="text-yellow-400/80 font-semibold not-italic">Latin:</span>
+                Alhamdulillāhil ladzī ath'amanā wa saqānā wa ja'alanā minal muslimīn.
+              </p>
+              <p class="text-amber-50/60 text-sm leading-relaxed">
+                <span class="text-green-400 font-semibold">Artinya:</span>
+                "Segala puji bagi Allah yang telah memberi kami makan dan minum serta menjadikan kami termasuk golongan orang-orang muslim."
+              </p>
+            </div>
+          </div>
+        </article>
+
+      </div><!-- /grid sahur -->
+    </section>
+
+
+    <!-- Ornament Divider -->
+    <div class="text-center text-yellow-500/60 text-lg ornament reveal" role="separator" aria-hidden="true">
+      ☽
+    </div>
+
+
+    <!-- ====================================================
+         SECTION: BUKA PUASA
+         ==================================================== -->
+    <section id="buka-puasa" aria-labelledby="buka-title" class="reveal">
+
+      <!-- Section Header Banner -->
+      <div class="mesh-buka rounded-3xl p-8 md:p-12 mb-8 relative overflow-hidden border border-green-500/30">
+        <div class="section-badge inline-block bg-green-700 px-6 py-1 text-amber-50
+                    text-xs font-bold tracking-widest uppercase mb-4">
+          Buka Puasa
+        </div>
+        <h2 id="buka-title" class="font-serif text-3xl md:text-4xl font-bold text-amber-50">
+          🌅 Doa <span class="text-green-400">Buka Puasa</span>
+        </h2>
+        <p class="text-amber-50/60 mt-2 text-sm md:text-base">
+          Doa yang dibaca ketika adzan Maghrib tiba dan berbuka puasa
+        </p>
+      </div>
+
+      <!-- Grid Doa Buka Puasa -->
+      <div class="grid gap-6 md:grid-cols-2">
+
+        <!-- Doa Buka 01 – H.R. Abu Dawud -->
+        <article class="doa-card bg-green-900/60 border border-green-500/20 rounded-2xl p-6 reveal"
+                 aria-label="Doa Berbuka Puasa Riwayat Abu Dawud">
+          <div class="flex items-center gap-3 mb-5">
+            <span class="w-9 h-9 rounded-full bg-green-700/30 border border-green-500/40
+                         flex items-center justify-center text-green-400 text-sm font-bold">
+              01
+            </span>
+            <div>
+              <h3 class="font-serif text-lg text-green-400 font-semibold leading-tight">
+                Doa Berbuka Puasa
+              </h3>
+              <span class="text-amber-50/40 text-xs">H.R. Abu Dawud</span>
+            </div>
+          </div>
+
+          <p class="arabic-text text-amber-50/90 text-2xl md:text-3xl mb-5" lang="ar">
+            اَللّٰهُمَّ لَكَ صُمْتُ وَبِكَ آمَنْتُ وَعَلٰى رِزْقِكَ أَفْطَرْتُ
+          </p>
+
+          <div class="border-t border-green-500/10 pt-4 space-y-2">
+            <p class="text-amber-50/70 text-sm italic leading-relaxed">
+              <span class="text-yellow-400/80 font-semibold not-italic">Latin:</span>
+              Allāhumma laka shumtu wa bika āmantu wa 'alā rizqika afthartu.
+            </p>
+            <p class="text-amber-50/60 text-sm leading-relaxed">
+              <span class="text-green-400 font-semibold">Artinya:</span>
+              "Ya Allah, untuk-Mu aku berpuasa, kepada-Mu aku beriman, dan dengan rezeki-Mu aku berbuka."
+            </p>
+          </div>
+        </article>
+
+        <!-- Doa Buka 02 – H.R. Ibnu Majah -->
+        <article class="doa-card bg-green-900/60 border border-green-500/20 rounded-2xl p-6 reveal"
+                 style="transition-delay:.1s"
+                 aria-label="Doa Berbuka Puasa Riwayat Ibnu Majah">
+          <div class="flex items-center gap-3 mb-5">
+            <span class="w-9 h-9 rounded-full bg-green-700/30 border border-green-500/40
+                         flex items-center justify-center text-green-400 text-sm font-bold">
+              02
+            </span>
+            <div>
+              <h3 class="font-serif text-lg text-green-400 font-semibold leading-tight">
+                Doa Berbuka Puasa
+              </h3>
+              <span class="text-amber-50/40 text-xs">H.R. Ibnu Majah</span>
+            </div>
+          </div>
+
+          <p class="arabic-text text-amber-50/90 text-2xl md:text-3xl mb-5" lang="ar">
+            ذَهَبَ الظَّمَأُ وَابْتَلَّتِ الْعُرُوْقُ وَثَبَتَ الْأَجْرُ إِنْ شَاءَ اللّٰهُ
+          </p>
+
+          <div class="border-t border-green-500/10 pt-4 space-y-2">
+            <p class="text-amber-50/70 text-sm italic leading-relaxed">
+              <span class="text-yellow-400/80 font-semibold not-italic">Latin:</span>
+              Dzahabadh dhama'u wabtallatil 'urūqu wa tsabatal ajru insyā Allah.
+            </p>
+            <p class="text-amber-50/60 text-sm leading-relaxed">
+              <span class="text-green-400 font-semibold">Artinya:</span>
+              "Telah hilang rasa haus, urat-urat telah basah, serta pahala telah tetap, insya Allah."
+            </p>
+          </div>
+        </article>
+
+        <!-- Doa Buka 03 – Bismillah (full width) -->
+        <article class="doa-card bg-green-900/60 border border-green-500/20 rounded-2xl p-6 md:col-span-2 reveal"
+                 style="transition-delay:.2s"
+                 aria-label="Doa Memulai Makan Buka Puasa">
+          <div class="flex items-center gap-3 mb-5">
+            <span class="w-9 h-9 rounded-full bg-green-700/30 border border-green-500/40
+                         flex items-center justify-center text-green-400 text-sm font-bold">
+              03
+            </span>
+            <h3 class="font-serif text-lg text-green-400 font-semibold">
+              Doa Memulai Makan Buka Puasa
+            </h3>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6">
+            <p class="arabic-text text-amber-50/90 text-2xl md:text-3xl" lang="ar">
+              بِسْمِ اللّٰهِ وَعَلٰى بَرَكَةِ اللّٰهِ
+            </p>
+            <div class="border-t md:border-t-0 md:border-l border-green-500/10 pt-4 md:pt-0 md:pl-6 flex flex-col justify-center space-y-2">
+              <p class="text-amber-50/70 text-sm italic leading-relaxed">
+                <span class="text-yellow-400/80 font-semibold not-italic">Latin:</span>
+                Bismillāhi wa 'alā barakatillāh.
+              </p>
+              <p class="text-amber-50/60 text-sm leading-relaxed">
+                <span class="text-green-400 font-semibold">Artinya:</span>
+                "Dengan nama Allah dan atas berkah Allah."
+              </p>
+            </div>
+          </div>
+        </article>
+
+      </div><!-- /grid buka puasa -->
+    </section>
+
+
+  </main>
+  <!-- /main -->
+
+
+  <!-- ========== FOOTER (component) ========== -->
+  <!-- components/footer.html -->
+  <footer class="relative z-10 border-t border-yellow-500/10 py-10 text-center">
+    <p class="arabic-text text-yellow-400/70 text-2xl mb-1"
+       lang="ar" style="direction:rtl; text-align:center;">
+      رَمَضَان كَرِيم
+    </p>
+    <p class="text-amber-50/40 text-xs font-sans">
+      Ramadhan Kareem &bull; Marhaban ya Ramadhan
+    </p>
+    <p class="text-amber-50/25 text-xs mt-3 font-sans">
+      &copy; 2025 Doa Ramadhan &mdash; Semoga ibadah kita diterima Allah SWT
+    </p>
+  </footer>
+  <!-- /footer component -->
+
+
+  <!-- ========== SCRIPTS ========== -->
+  <script src="assets/js/script.js"></script>
+
+</body>
+</html>

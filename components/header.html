@@ -1,0 +1,58 @@
+<!-- ============================================
+     components/header.html
+     Ramadhan – Site Header & Navigation
+     ============================================ -->
+<header class="relative z-10 py-12 px-4 text-center overflow-hidden">
+
+  <!-- Decorative ring -->
+  <div class="absolute inset-0 flex items-center justify-center pointer-events-none" aria-hidden="true">
+    <div class="w-[600px] h-[600px] rounded-full border border-yellow-600/10 scale-75 -translate-y-1/2"></div>
+  </div>
+
+  <!-- Crescent Moon -->
+  <div class="relative inline-block mb-4 animate-fade-in" aria-hidden="true">
+    <svg width="64" height="64" viewBox="0 0 64 64" fill="none"
+         class="mx-auto drop-shadow-[0_0_12px_rgba(201,169,74,0.8)]">
+      <path d="M48 32c0 13.255-10.745 24-24 24C10.745 56 0 45.255 0 32S10.745
+               8 24 8c-2.21 3.89-3.5 8.393-3.5 13.2C20.5 35.46 31.04 46 44.3
+               46A24.2 24.2 0 0 0 48 45.7 23.9 23.9 0 0 0 48 32z"
+            fill="#c9a94a"/>
+    </svg>
+  </div>
+
+  <!-- Bismillah -->
+  <p class="arabic-text text-yellow-400/80 text-xl tracking-wide mb-2 animate-fade-in"
+     style="animation-delay:.2s; direction:rtl; text-align:center;"
+     lang="ar">
+    بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ
+  </p>
+
+  <!-- Title -->
+  <h1 class="font-serif text-4xl md:text-6xl font-bold text-amber-50 animate-fade-up"
+      style="animation-delay:.3s">
+    Doa <span class="text-yellow-400">Ramadhan</span>
+  </h1>
+
+  <!-- Subtitle -->
+  <p class="mt-3 text-amber-50/60 text-sm md:text-base max-w-md mx-auto animate-fade-up"
+     style="animation-delay:.4s">
+    Kumpulan doa sahur &amp; buka puasa untuk menemani ibadahmu di bulan suci
+  </p>
+
+  <!-- Navigation Quick-Jump -->
+  <nav class="mt-8 flex justify-center gap-4 animate-fade-up"
+       style="animation-delay:.5s"
+       aria-label="Navigasi halaman doa">
+    <a href="#sahur"
+       class="px-6 py-2 rounded-full border border-yellow-500/40 text-yellow-400 text-sm
+              font-semibold hover:bg-yellow-400 hover:text-green-950 transition-all duration-300">
+      🌙 Sahur
+    </a>
+    <a href="#buka-puasa"
+       class="px-6 py-2 rounded-full border border-green-500/40 text-green-400 text-sm
+              font-semibold hover:bg-green-700 hover:text-amber-50 transition-all duration-300">
+      🌅 Buka Puasa
+    </a>
+  </nav>
+
+</header>

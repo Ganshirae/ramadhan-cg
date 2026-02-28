@@ -1,0 +1,108 @@
+/* ============================================
+   RAMADHAN - Custom CSS (Tailwind Companion)
+   ============================================ */
+
+/* ---- Arabic Text ---- */
+.arabic-text {
+  font-family: 'Lateef', 'Amiri', serif;
+  direction: rtl;
+  text-align: right;
+  line-height: 2.4;
+}
+
+/* ---- Starfield ---- */
+.star {
+  position: absolute;
+  border-radius: 50%;
+  background: #ffffff;
+  animation: twinkle 3s ease-in-out infinite;
+}
+
+/* ---- Card Hover ---- */
+.doa-card {
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+.doa-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(201, 169, 74, 0.2);
+}
+
+/* ---- Section Badge ---- */
+.section-badge {
+  clip-path: polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
+}
+
+/* ---- Ornament Divider ---- */
+.ornament::before,
+.ornament::after {
+  content: '';
+  display: inline-block;
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #c9a94a);
+  vertical-align: middle;
+  margin: 0 12px;
+}
+.ornament::after {
+  background: linear-gradient(90deg, #c9a94a, transparent);
+}
+
+/* ---- Scroll Reveal ---- */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---- Lantern ---- */
+.lantern-string::before {
+  content: '';
+  display: block;
+  width: 2px;
+  height: 20px;
+  background: #c9a94a;
+  margin: 0 auto;
+}
+
+/* ---- Gradient Mesh Backgrounds ---- */
+.mesh-sahur {
+  background:
+    radial-gradient(ellipse at 20% 30%, rgba(26, 92, 58, 0.15) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 70%, rgba(201, 169, 74, 0.1) 0%, transparent 60%),
+    #163320;
+}
+.mesh-buka {
+  background:
+    radial-gradient(ellipse at 80% 20%, rgba(201, 169, 74, 0.2) 0%, transparent 60%),
+    radial-gradient(ellipse at 20% 80%, rgba(26, 92, 58, 0.2) 0%, transparent 60%),
+    #0f2419;
+}
+
+/* ---- Animations ---- */
+@keyframes twinkle {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.2; }
+}
+
+@keyframes fadeUp {
+  0%   { opacity: 0; transform: translateY(24px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  0%   { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes sway {
+  0%, 100% { transform: rotate(-4deg); }
+  50%       { transform: rotate(4deg); }
+}
+
+.animate-fade-up   { animation: fadeUp 0.7s ease both; }
+.animate-fade-in   { animation: fadeIn 0.8s ease both; }
+.animate-lantern   { animation: sway 4s ease-in-out infinite; transform-origin: top center; }
