@@ -1,0 +1,135 @@
+<!-- ============================================
+     components/navbar.html
+     Ramadhan – Sticky Navbar
+     ============================================ -->
+<nav
+  id="navbar"
+  class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+  aria-label="Navigasi utama"
+>
+  <div
+    class="navbar-inner max-w-5xl mx-auto px-4 py-3 flex items-center justify-between"
+  >
+    <!-- Logo / Brand -->
+    <a href="index.html" class="flex items-center gap-2 group">
+      <svg
+        width="28"
+        height="28"
+        viewBox="0 0 64 64"
+        fill="none"
+        class="drop-shadow-[0_0_6px_rgba(201,169,74,0.7)] group-hover:scale-110 transition-transform"
+      >
+        <path
+          d="M48 32c0 13.255-10.745 24-24 24C10.745 56 0 45.255 0 32S10.745 8 24 8c-2.21 3.89-3.5 8.393-3.5 13.2C20.5 35.46 31.04 46 44.3 46A24.2 24.2 0 0 0 48 45.7 23.9 23.9 0 0 0 48 32z"
+          fill="#c9a94a"
+        />
+      </svg>
+      <span class="font-serif text-lg font-bold text-amber-50 tracking-wide"
+        >Ramadhan<span class="text-yellow-400">.</span></span
+      >
+    </a>
+
+    <!-- Desktop Menu -->
+    <ul class="hidden md:flex items-center gap-1" role="list">
+      <li>
+        <a
+          href="index.html"
+          class="nav-link px-4 py-2 rounded-full text-sm font-semibold text-amber-50/70 hover:text-amber-50 hover:bg-white/10 transition-all duration-200"
+          data-page="home"
+        >
+          Home
+        </a>
+      </li>
+      <li>
+        <a
+          href="doa.html"
+          class="nav-link px-4 py-2 rounded-full text-sm font-semibold text-amber-50/70 hover:text-amber-50 hover:bg-white/10 transition-all duration-200"
+          data-page="doa"
+        >
+          Doa
+        </a>
+      </li>
+      <li>
+        <a
+          href="zikir.html"
+          class="nav-link px-4 py-2 rounded-full text-sm font-semibold text-amber-50/70 hover:text-amber-50 hover:bg-white/10 transition-all duration-200"
+          data-page="zikir"
+        >
+          Zikir
+        </a>
+      </li>
+    </ul>
+
+    <!-- Mobile Hamburger -->
+    <button
+      id="menu-toggle"
+      class="md:hidden p-2 rounded-lg text-amber-50/70 hover:text-amber-50 hover:bg-white/10 transition-all"
+      aria-label="Buka menu"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+    >
+      <svg
+        id="icon-open"
+        width="22"
+        height="22"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        viewBox="0 0 24 24"
+      >
+        <path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+      <svg
+        id="icon-close"
+        width="22"
+        height="22"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        viewBox="0 0 24 24"
+        class="hidden"
+      >
+        <path stroke-linecap="round" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+  </div>
+
+  <!-- Mobile Menu Dropdown -->
+  <div
+    id="mobile-menu"
+    class="hidden md:hidden border-t border-white/10 bg-green-950/95 backdrop-blur-md"
+    aria-hidden="true"
+  >
+    <ul class="flex flex-col px-4 py-3 gap-1" role="list">
+      <li>
+        <a
+          href="index.html"
+          class="nav-link flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold text-amber-50/70 hover:text-amber-50 hover:bg-white/10 transition-all"
+          data-page="home"
+        >
+          Home
+        </a>
+      </li>
+      <li>
+        <a
+          href="doa.html"
+          class="nav-link flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold text-amber-50/70 hover:text-amber-50 hover:bg-white/10 transition-all"
+          data-page="doa"
+        >
+          Doa
+        </a>
+      </li>
+      <li>
+        <a
+          href="zikir.html"
+          class="nav-link flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold text-amber-50/70 hover:text-amber-50 hover:bg-white/10 transition-all"
+          data-page="zikir"
+        >
+          Zikir
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<!-- Spacer agar konten tidak tertutup navbar -->
+<div class="h-14"></div>
