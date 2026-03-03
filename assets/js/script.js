@@ -205,7 +205,7 @@ function initZikir() {
     // Notification
     if (count === target) {
       showNotification(
-        `🎉 Target ${target}x tercapai! Allahu Akbar!`,
+        `Target ${target}x tercapai! Alhamdulillah`,
         "notif-target",
       );
     } else if (count > 0 && count % target === 0) {
