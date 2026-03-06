@@ -295,3 +295,635 @@
 .animate-bounce-slow {
   animation: bounceSlow 2s ease-in-out infinite;
 }
+
+/* ====================================================
+   ZAKAT KALKULATOR
+   ==================================================== */
+
+.zakat-section-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(201, 169, 74, 0.45);
+  border-bottom: 1px solid rgba(201, 169, 74, 0.1);
+  padding-bottom: 10px;
+}
+
+.zakat-label {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: rgba(253, 230, 138, 0.65);
+  margin-bottom: 8px;
+  letter-spacing: 0.015em;
+}
+.zakat-label-unit {
+  font-size: 0.68rem;
+  font-weight: 400;
+  color: rgba(253, 230, 138, 0.3);
+  letter-spacing: 0.03em;
+}
+
+.zakat-hint {
+  font-size: 0.72rem;
+  color: rgba(253, 230, 138, 0.3);
+  margin-top: 6px;
+  margin-left: 2px;
+  line-height: 1.5;
+}
+
+.select-wrapper {
+  position: relative;
+}
+.zakat-select {
+  width: 100%;
+  padding: 13px 42px 13px 16px;
+  background: rgba(4, 22, 11, 0.6);
+  border: 1px solid rgba(201, 169, 74, 0.18);
+  border-radius: 14px;
+  color: #fef3c7;
+  font-family: "Nunito", sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+}
+.zakat-select:focus {
+  border-color: rgba(201, 169, 74, 0.45);
+  box-shadow: 0 0 0 3px rgba(201, 169, 74, 0.08);
+}
+.zakat-select option {
+  background: #0f2419;
+  color: #fef3c7;
+}
+.select-arrow {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(201, 169, 74, 0.4);
+  pointer-events: none;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.input-prefix {
+  position: absolute;
+  left: 14px;
+  color: rgba(201, 169, 74, 0.4);
+  font-size: 0.75rem;
+  font-weight: 700;
+  pointer-events: none;
+  letter-spacing: 0.03em;
+  z-index: 1;
+}
+.input-suffix {
+  position: absolute;
+  right: 14px;
+  color: rgba(201, 169, 74, 0.4);
+  font-size: 0.75rem;
+  font-weight: 700;
+  pointer-events: none;
+  letter-spacing: 0.03em;
+}
+.zakat-input {
+  width: 100%;
+  padding: 13px 16px;
+  background: rgba(4, 22, 11, 0.6);
+  border: 1px solid rgba(201, 169, 74, 0.18);
+  border-radius: 14px;
+  color: #fef3c7;
+  font-family: "Nunito", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+}
+.zakat-input.with-prefix {
+  padding-left: 42px;
+}
+.zakat-input.with-suffix {
+  padding-right: 42px;
+}
+.zakat-input:focus {
+  border-color: rgba(201, 169, 74, 0.45);
+  box-shadow: 0 0 0 3px rgba(201, 169, 74, 0.08);
+}
+.zakat-input::placeholder {
+  color: rgba(253, 230, 138, 0.15);
+}
+.zakat-input::-webkit-inner-spin-button,
+.zakat-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.zakat-input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.form-fieldset {
+  border: 1px solid rgba(201, 169, 74, 0.1);
+  border-radius: 16px;
+  padding: 0 16px 16px;
+  background: rgba(4, 22, 11, 0.25);
+}
+.fieldset-legend {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(201, 169, 74, 0.4);
+  padding: 0 8px;
+}
+
+#btn-hitung {
+  box-shadow: 0 4px 24px rgba(201, 169, 74, 0.2);
+  letter-spacing: 0.08em;
+}
+#btn-hitung:hover {
+  box-shadow: 0 4px 32px rgba(201, 169, 74, 0.4);
+  transform: translateY(-1px);
+}
+#btn-hitung:active {
+  transform: scale(0.98);
+  box-shadow: none;
+}
+
+.hasil-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 11px 14px;
+  border-radius: 10px;
+  background: rgba(4, 22, 11, 0.4);
+}
+.hasil-label {
+  font-size: 0.78rem;
+  color: rgba(253, 230, 138, 0.4);
+  flex-shrink: 0;
+}
+.hasil-value {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: rgba(254, 243, 199, 0.9);
+  text-align: right;
+}
+.hasil-row-highlight {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: rgba(201, 169, 74, 0.1);
+  border: 1px solid rgba(201, 169, 74, 0.2);
+  margin-top: 8px;
+}
+.hasil-label-highlight {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: rgba(253, 230, 138, 0.75);
+}
+.hasil-value-highlight {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #fde68a;
+}
+
+.badge-wajib {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px;
+  border-radius: 14px;
+  background: rgba(201, 169, 74, 0.1);
+  border: 1px solid rgba(201, 169, 74, 0.3);
+}
+.badge-tidak-wajib {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px;
+  border-radius: 14px;
+  background: rgba(74, 222, 128, 0.07);
+  border: 1px solid rgba(74, 222, 128, 0.2);
+}
+.badge-dot-wajib {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #fde68a;
+  box-shadow: 0 0 8px rgba(253, 230, 138, 0.6);
+  flex-shrink: 0;
+}
+.badge-dot-tidak {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #86efac;
+  box-shadow: 0 0 8px rgba(134, 239, 172, 0.5);
+  flex-shrink: 0;
+}
+
+.panduan-card {
+  background: rgba(4, 22, 11, 0.4);
+  border: 1px solid rgba(201, 169, 74, 0.1);
+  border-radius: 16px;
+  padding: 18px 20px;
+}
+.panduan-card-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.panduan-text {
+  font-size: 0.78rem;
+  color: rgba(253, 230, 138, 0.45);
+  line-height: 1.75;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.slide-down {
+  animation: slideDown 0.3s ease both;
+}
+
+/* ====================================================
+   THEME SWITCHER
+   ==================================================== */
+
+/* Theme variables applied to body */
+body {
+  transition: background-color 0.5s ease;
+}
+
+/* Default theme: Malam Ramadhan (existing green-950) */
+body.theme-malam { background-color: #052e16; }
+
+/* Theme: Langit Sahur – deep navy blue */
+body.theme-sahur { background-color: #0c1445; }
+
+/* Theme: Padang Pasir – warm dark sand */
+body.theme-pasir { background-color: #1c1008; }
+
+/* Theme: Madinah – deep purple-maroon */
+body.theme-madinah { background-color: #150a1e; }
+
+/* Theme: Fajar – dark teal */
+body.theme-fajar { background-color: #071e20; }
+
+/* Theme swatch button */
+.theme-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+  flex-shrink: 0;
+}
+.theme-btn:hover { transform: scale(1.15); }
+.theme-btn.active { border-color: rgba(201, 169, 74, 0.9); }
+
+/* Theme panel */
+#theme-panel {
+  position: fixed;
+  bottom: 28px;
+  right: 24px;
+  z-index: 100;
+}
+.theme-panel-toggle {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(10, 31, 18, 0.9);
+  border: 1px solid rgba(201, 169, 74, 0.3);
+  backdrop-filter: blur(12px);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+}
+.theme-panel-toggle:hover {
+  border-color: rgba(201, 169, 74, 0.6);
+  box-shadow: 0 4px 24px rgba(201, 169, 74, 0.2);
+}
+.theme-panel-drawer {
+  position: absolute;
+  bottom: 54px;
+  right: 0;
+  background: rgba(10, 25, 15, 0.95);
+  border: 1px solid rgba(201, 169, 74, 0.18);
+  border-radius: 18px;
+  padding: 14px 16px;
+  backdrop-filter: blur(16px);
+  min-width: 170px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  opacity: 0;
+  transform: translateY(8px) scale(0.97);
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+.theme-panel-drawer.open {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+.theme-panel-title {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(201, 169, 74, 0.45);
+  margin-bottom: 10px;
+}
+.theme-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 8px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.theme-option:hover { background: rgba(201, 169, 74, 0.08); }
+.theme-option.active { background: rgba(201, 169, 74, 0.1); }
+.theme-option-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: rgba(254, 243, 199, 0.65);
+}
+.theme-option.active .theme-option-label { color: rgba(253, 230, 138, 0.9); }
+
+/* ====================================================
+   IBADAH / TO-DO LIST
+   ==================================================== */
+
+/* Tab navigation */
+.ibadah-tab {
+  flex: 1;
+  padding: 10px 8px;
+  border-radius: 12px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: rgba(253, 230, 138, 0.45);
+  background: transparent;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+  letter-spacing: 0.01em;
+}
+.ibadah-tab:hover {
+  color: rgba(253, 230, 138, 0.75);
+  background: rgba(201, 169, 74, 0.06);
+}
+.ibadah-tab.active {
+  color: #fde68a;
+  background: rgba(201, 169, 74, 0.14);
+  border-color: rgba(201, 169, 74, 0.3);
+}
+
+/* Tab panels */
+.ibadah-panel { display: none; }
+.ibadah-panel.active { display: block; }
+
+/* Progress bar */
+.ibadah-progress-track {
+  width: 100%;
+  height: 6px;
+  background: rgba(201, 169, 74, 0.1);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.ibadah-progress-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #a16207, #c9a94a, #fde68a);
+  transition: width 0.5s ease;
+}
+
+/* Daily summary card */
+.daily-summary {
+  background: rgba(4, 22, 11, 0.5);
+  border: 1px solid rgba(201, 169, 74, 0.15);
+  border-radius: 20px;
+  padding: 18px 20px;
+}
+
+/* Shalat checklist */
+.shalat-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: rgba(4, 22, 11, 0.45);
+  border: 1px solid rgba(201, 169, 74, 0.1);
+  transition: border-color 0.2s, background 0.2s;
+  cursor: pointer;
+  user-select: none;
+}
+.shalat-item:hover {
+  border-color: rgba(201, 169, 74, 0.25);
+  background: rgba(4, 22, 11, 0.6);
+}
+.shalat-item.checked {
+  border-color: rgba(201, 169, 74, 0.35);
+  background: rgba(201, 169, 74, 0.08);
+}
+.shalat-item-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: rgba(254, 243, 199, 0.7);
+  transition: color 0.2s;
+}
+.shalat-item.checked .shalat-item-label {
+  color: rgba(253, 230, 138, 0.95);
+}
+.shalat-check-box {
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  border: 1.5px solid rgba(201, 169, 74, 0.3);
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s;
+}
+.shalat-item.checked .shalat-check-box {
+  background: rgba(201, 169, 74, 0.9);
+  border-color: #c9a94a;
+}
+.shalat-check-icon {
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.shalat-item.checked .shalat-check-icon { opacity: 1; }
+
+/* Waktu label */
+.shalat-time {
+  font-size: 0.7rem;
+  color: rgba(253, 230, 138, 0.3);
+  font-weight: 500;
+}
+
+/* Quran input */
+.quran-input {
+  width: 100%;
+  padding: 12px 16px;
+  background: rgba(4, 22, 11, 0.6);
+  border: 1px solid rgba(201, 169, 74, 0.18);
+  border-radius: 14px;
+  color: #fef3c7;
+  font-family: "Nunito", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.quran-input:focus {
+  border-color: rgba(201, 169, 74, 0.45);
+  box-shadow: 0 0 0 3px rgba(201, 169, 74, 0.08);
+}
+.quran-input::placeholder { color: rgba(253, 230, 138, 0.15); }
+.quran-input::-webkit-inner-spin-button,
+.quran-input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+.quran-input[type=number] { -moz-appearance: textfield; }
+
+/* Puasa calendar */
+.puasa-calendar {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 8px;
+}
+@media (max-width: 480px) {
+  .puasa-calendar { grid-template-columns: repeat(5, 1fr); }
+}
+.puasa-day {
+  aspect-ratio: 1;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.78rem;
+  font-weight: 600;
+  border: 1px solid rgba(201, 169, 74, 0.12);
+  background: rgba(4, 22, 11, 0.45);
+  color: rgba(254, 243, 199, 0.45);
+  cursor: pointer;
+  transition: all 0.2s;
+  user-select: none;
+}
+.puasa-day:hover {
+  border-color: rgba(201, 169, 74, 0.3);
+  color: rgba(254, 243, 199, 0.8);
+}
+.puasa-day.done {
+  background: rgba(201, 169, 74, 0.15);
+  border-color: rgba(201, 169, 74, 0.4);
+  color: #fde68a;
+}
+.puasa-day.today {
+  border-color: rgba(201, 169, 74, 0.6);
+  box-shadow: 0 0 10px rgba(201, 169, 74, 0.2);
+}
+.puasa-day.done.today {
+  background: rgba(201, 169, 74, 0.25);
+  box-shadow: 0 0 14px rgba(201, 169, 74, 0.35);
+}
+
+/* Save button */
+.ibadah-save-btn {
+  width: 100%;
+  padding: 13px;
+  border-radius: 14px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #052e16;
+  background: linear-gradient(135deg, #b8942e, #c9a94a, #dfc06a);
+  border: none;
+  cursor: pointer;
+  transition: box-shadow 0.2s, transform 0.15s;
+  box-shadow: 0 4px 20px rgba(201, 169, 74, 0.2);
+}
+.ibadah-save-btn:hover {
+  box-shadow: 0 4px 28px rgba(201, 169, 74, 0.4);
+  transform: translateY(-1px);
+}
+.ibadah-save-btn:active { transform: scale(0.98); }
+
+/* Save feedback toast */
+#save-toast {
+  position: fixed;
+  bottom: 90px;
+  left: 50%;
+  transform: translateX(-50%) translateY(16px);
+  background: rgba(10, 31, 18, 0.95);
+  border: 1px solid rgba(201, 169, 74, 0.3);
+  color: #fde68a;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 10px 24px;
+  border-radius: 999px;
+  backdrop-filter: blur(12px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  white-space: nowrap;
+  z-index: 200;
+}
+#save-toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Status motivasi badge */
+.motivasi-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+.motivasi-low {
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  color: #fca5a5;
+}
+.motivasi-mid {
+  background: rgba(201, 169, 74, 0.12);
+  border: 1px solid rgba(201, 169, 74, 0.3);
+  color: #fde68a;
+}
+.motivasi-high {
+  background: rgba(74, 222, 128, 0.1);
+  border: 1px solid rgba(74, 222, 128, 0.25);
+  color: #86efac;
+}

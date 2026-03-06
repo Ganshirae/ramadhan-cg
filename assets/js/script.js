@@ -209,7 +209,7 @@ function initZikir() {
         "notif-target",
       );
     } else if (count > 0 && count % target === 0) {
-      showNotification(`✅ Putaran ke-${rounds} selesai!`, "notif-round");
+      showNotification(`Putaran ke-${rounds} selesai!`, "notif-round");
     }
   }
 
@@ -219,7 +219,7 @@ function initZikir() {
     notification.classList.remove("hidden");
     // auto hide after 4s unless at target
     clearTimeout(notification._timer);
-    if (!msg.includes("🎉")) {
+    if (!msg.includes("Target")) {
       notification._timer = setTimeout(
         () => notification.classList.add("hidden"),
         4000,
@@ -302,6 +302,563 @@ function initZikir() {
   updateUI();
 }
 
+
+/* ================================================
+   ZAKAT KALKULATOR
+   ================================================ */
+function initZakat() {
+  if (window.CURRENT_PAGE !== "zakat") return;
+
+  const jenisSelect     = document.getElementById("jenis-zakat");
+  const formPenghasilan = document.getElementById("form-penghasilan");
+  const formEmas        = document.getElementById("form-emas");
+  const formHargaEmas   = document.getElementById("form-harga-emas");
+  const btnHitung       = document.getElementById("btn-hitung");
+  const btnResetHitung  = document.getElementById("btn-reset-hitung");
+  const hasilSection    = document.getElementById("hasil-section");
+  const errorMsg        = document.getElementById("error-msg");
+
+  const inputGaji       = document.getElementById("gaji");
+  const inputPengLain   = document.getElementById("penghasilan-lain");
+  const inputTotalEmas  = document.getElementById("total-emas");
+  const inputHargaEmas  = document.getElementById("harga-emas");
+
+  const hasilJenis  = document.getElementById("hasil-jenis");
+  const hasilTotal  = document.getElementById("hasil-total");
+  const hasilNisab  = document.getElementById("hasil-nisab");
+  const hasilZakat  = document.getElementById("hasil-zakat");
+  const hasilInfo   = document.getElementById("hasil-info");
+  const statusBadge = document.getElementById("status-badge");
+
+  const formatRp = (n) => "Rp " + Math.round(n).toLocaleString("id-ID");
+
+  function showError(msg) {
+    errorMsg.textContent = msg;
+    errorMsg.classList.remove("hidden");
+  }
+  function clearError() {
+    errorMsg.textContent = "";
+    errorMsg.classList.add("hidden");
+  }
+  function showEl(el) {
+    el.classList.remove("hidden");
+    el.classList.add("slide-down");
+  }
+  function hideEl(el) {
+    el.classList.add("hidden");
+    el.classList.remove("slide-down");
+  }
+
+  jenisSelect.addEventListener("change", () => {
+    const val = jenisSelect.value;
+    clearError();
+    hideEl(hasilSection);
+    hideEl(formPenghasilan);
+    hideEl(formEmas);
+    hideEl(formHargaEmas);
+    hideEl(btnHitung);
+
+    if (val === "penghasilan") {
+      showEl(formPenghasilan);
+      showEl(formHargaEmas);
+      showEl(btnHitung);
+    } else if (val === "emas") {
+      showEl(formEmas);
+      showEl(formHargaEmas);
+      showEl(btnHitung);
+    }
+  });
+
+  btnHitung.addEventListener("click", () => {
+    clearError();
+    const jenis     = jenisSelect.value;
+    const hargaEmas = parseFloat(inputHargaEmas.value);
+
+    if (!hargaEmas || hargaEmas <= 0) {
+      showError("Harga emas per gram harus diisi dengan nilai yang benar.");
+      inputHargaEmas.focus();
+      return;
+    }
+
+    const nisab = hargaEmas * 85;
+    let total = 0;
+    let labelJenis = "";
+
+    if (jenis === "penghasilan") {
+      const gaji     = parseFloat(inputGaji.value) || 0;
+      const pengLain = parseFloat(inputPengLain.value) || 0;
+      if (gaji <= 0) {
+        showError("Gaji / Penghasilan pokok harus diisi.");
+        inputGaji.focus();
+        return;
+      }
+      total      = gaji + pengLain;
+      labelJenis = "Zakat Penghasilan";
+    } else if (jenis === "emas") {
+      const gram = parseFloat(inputTotalEmas.value);
+      if (!gram || gram <= 0) {
+        showError("Total emas yang dimiliki harus diisi.");
+        inputTotalEmas.focus();
+        return;
+      }
+      total      = gram * hargaEmas;
+      labelJenis = "Zakat Emas";
+    }
+
+    const wajib       = total >= nisab;
+    const jumlahZakat = wajib ? total * 0.025 : 0;
+
+    hasilJenis.textContent = labelJenis;
+    hasilTotal.textContent = formatRp(total);
+    hasilNisab.textContent = formatRp(nisab);
+    hasilZakat.textContent = wajib ? formatRp(jumlahZakat) : "Rp 0";
+
+    if (wajib) {
+      statusBadge.innerHTML =
+        '<div class="badge-wajib">' +
+          '<div class="badge-dot-wajib"></div>' +
+          '<div>' +
+            '<p style="font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(253,230,138,.6);">Status Zakat</p>' +
+            '<p class="font-serif" style="font-size:1.1rem;font-weight:600;color:#fde68a;line-height:1.3;margin-top:2px;">Wajib Zakat</p>' +
+          '</div>' +
+        '</div>';
+      hasilInfo.className = "px-4 py-3 rounded-xl text-xs leading-relaxed bg-yellow-400/6 border border-yellow-500/15 text-amber-50/50";
+      hasilInfo.innerHTML =
+        "Total harta Anda sebesar <strong style='color:rgba(254,243,199,.75)'>" + formatRp(total) + "</strong> " +
+        "telah melampaui nilai nisab <strong style='color:rgba(254,243,199,.75)'>" + formatRp(nisab) + "</strong>. " +
+        "Zakat yang wajib ditunaikan sebesar <strong style='color:rgba(253,230,138,.9)'>" + formatRp(jumlahZakat) + "</strong> " +
+        "(2.5% dari total harta). Segera tunaikan melalui lembaga zakat terpercaya.";
+    } else {
+      statusBadge.innerHTML =
+        '<div class="badge-tidak-wajib">' +
+          '<div class="badge-dot-tidak"></div>' +
+          '<div>' +
+            '<p style="font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(134,239,172,.5);">Status Zakat</p>' +
+            '<p class="font-serif" style="font-size:1.1rem;font-weight:600;color:#86efac;line-height:1.3;margin-top:2px;">Belum Wajib Zakat</p>' +
+          '</div>' +
+        '</div>';
+      hasilInfo.className = "px-4 py-3 rounded-xl text-xs leading-relaxed bg-green-500/6 border border-green-500/15 text-amber-50/50";
+      hasilInfo.innerHTML =
+        "Total harta Anda sebesar <strong style='color:rgba(254,243,199,.75)'>" + formatRp(total) + "</strong> " +
+        "belum mencapai nilai nisab <strong style='color:rgba(254,243,199,.75)'>" + formatRp(nisab) + "</strong>. " +
+        "Anda belum diwajibkan membayar zakat, namun tetap dianjurkan untuk bersedekah.";
+    }
+
+    showEl(hasilSection);
+    setTimeout(() => {
+      hasilSection.scrollIntoView({behavior: "smooth", block: "start"});
+    }, 100);
+  });
+
+  btnResetHitung.addEventListener("click", () => {
+    jenisSelect.value = "";
+    if (inputGaji)      inputGaji.value = "";
+    if (inputPengLain)  inputPengLain.value = "";
+    if (inputTotalEmas) inputTotalEmas.value = "";
+    if (inputHargaEmas) inputHargaEmas.value = "";
+    hideEl(formPenghasilan);
+    hideEl(formEmas);
+    hideEl(formHargaEmas);
+    hideEl(btnHitung);
+    hideEl(hasilSection);
+    clearError();
+    document.querySelector("section[aria-labelledby='kalkulator-title']")
+      ?.scrollIntoView({behavior: "smooth", block: "start"});
+  });
+}
+
+
+/* ================================================
+   THEME SWITCHER
+   ================================================ */
+function initTheme() {
+  const THEMES = ["malam","sahur","pasir","madinah","fajar"];
+  const saved  = localStorage.getItem("ramadhan-theme") || "malam";
+
+  function applyTheme(t) {
+    document.body.classList.remove(...THEMES.map(x => "theme-" + x));
+    document.body.classList.add("theme-" + t);
+    localStorage.setItem("ramadhan-theme", t);
+    document.querySelectorAll(".theme-option").forEach(el => {
+      el.classList.toggle("active", el.dataset.theme === t);
+    });
+  }
+
+  applyTheme(saved);
+
+  const toggle  = document.getElementById("theme-toggle");
+  const drawer  = document.getElementById("theme-drawer");
+  if (!toggle || !drawer) return;
+
+  toggle.addEventListener("click", () => {
+    const open = drawer.classList.toggle("open");
+    toggle.setAttribute("aria-expanded", String(open));
+    drawer.setAttribute("aria-hidden", String(!open));
+  });
+
+  document.querySelectorAll(".theme-option").forEach(opt => {
+    const activate = () => {
+      applyTheme(opt.dataset.theme);
+      drawer.classList.remove("open");
+      toggle.setAttribute("aria-expanded", "false");
+      drawer.setAttribute("aria-hidden", "true");
+    };
+    opt.addEventListener("click", activate);
+    opt.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); activate(); }});
+  });
+
+  // Close drawer on outside click
+  document.addEventListener("click", e => {
+    const panel = document.getElementById("theme-panel");
+    if (panel && !panel.contains(e.target)) {
+      drawer.classList.remove("open");
+      toggle.setAttribute("aria-expanded", "false");
+      drawer.setAttribute("aria-hidden", "true");
+    }
+  });
+}
+
+/* ================================================
+   IBADAH TO-DO LIST
+   ================================================ */
+function initIbadah() {
+  if (window.CURRENT_PAGE !== "ibadah") return;
+
+  const TODAY = new Date().toDateString();
+  const STORE_KEY = "ramadhan-ibadah-" + TODAY;
+
+  // Hitung hari Ramadhan 1447H otomatis (mulai 18 Februari 2026)
+  const RAMADHAN_START = new Date("2026-02-18T00:00:00");
+  const now = new Date();
+  const diffMs   = now - RAMADHAN_START;
+  const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+  const autoHari = Math.min(Math.max(diffDays, 1), 30);
+
+  // Load data harian – puasa.days disimpan terpisah agar persist lintas hari
+  const PUASA_KEY = "ramadhan-puasa-days";
+  const savedDays = JSON.parse(localStorage.getItem(PUASA_KEY) || "null") || Array(30).fill(false);
+
+  let data = JSON.parse(localStorage.getItem(STORE_KEY) || "null") || {
+    shalat:  { subuh:false, dzuhur:false, ashar:false, maghrib:false, isya:false },
+    quran:   { target:0, dibaca:0, selesai:false },
+    dzikir:  { pagi:false, petang:false, tasbih:false, istighfar:false },
+  };
+  // puasa.days dan hariRamadhan selalu ambil dari sumber persisten
+  data.puasa = { days: savedDays };
+  data.hariRamadhan = autoHari;
+
+  function save(section) {
+    // Simpan puasa.days ke key terpisah agar tidak direset tiap hari
+    localStorage.setItem(PUASA_KEY, JSON.stringify(data.puasa.days));
+    // Simpan data harian (tanpa puasa.days agar tidak membesar)
+    const dailyData = { shalat: data.shalat, quran: data.quran, dzikir: data.dzikir };
+    localStorage.setItem(STORE_KEY, JSON.stringify(dailyData));
+    updateSummary();
+    showToast("Tersimpan");
+    if (section === "shalat") renderShalat();
+    if (section === "quran")  renderQuran();
+    if (section === "puasa")  renderPuasa();
+    if (section === "dzikir") renderDzikir();
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById("save-toast");
+    if (!t) return;
+    t.textContent = msg;
+    t.classList.add("show");
+    setTimeout(() => t.classList.remove("show"), 2200);
+  }
+
+  /* ------ MOTIVASI helpers ------ */
+  function motivasiClass(pct) {
+    if (pct >= 100) return "motivasi-high";
+    if (pct >= 40)  return "motivasi-mid";
+    return "motivasi-low";
+  }
+  function shalatMotivasi(pct) {
+    if (pct >= 100) return "MasyaAllah, lengkap!";
+    if (pct >= 40)  return "Cukup baik";
+    return "Belum optimal";
+  }
+  function quranMotivasi(pct) {
+    if (pct >= 100) return "Target tercapai";
+    if (pct >= 50)  return "Hampir selesai";
+    return "Masih bisa ditambah";
+  }
+  function puasaMotivasi(pct) {
+    if (pct >= 100) return "Alhamdulillah, sempurna!";
+    if (pct >= 50)  return "Tetap istiqomah";
+    return "Semangat berpuasa";
+  }
+  function dzikirMotivasi(pct) {
+    if (pct >= 100) return "MasyaAllah, lengkap!";
+    if (pct >= 40)  return "Cukup baik";
+    return "Belum optimal";
+  }
+
+  function setMotivasi(el, pct, fn) {
+    if (!el) return;
+    el.className = "motivasi-badge " + motivasiClass(pct);
+    el.textContent = fn(pct);
+  }
+
+  /* ------ SUMMARY ------ */
+  function updateSummary() {
+    const shalatDone  = Object.values(data.shalat).filter(Boolean).length;
+    const shalatPct   = Math.round((shalatDone / 5) * 100);
+
+    const qTarget = parseInt(data.quran.target) || 0;
+    const qDibaca = parseInt(data.quran.dibaca) || 0;
+    const quranPct = qTarget > 0 ? Math.min(Math.round((qDibaca / qTarget) * 100), 100) : 0;
+
+    // Puasa: cukup cek apakah hari ini sudah puasa (0 atau 100%)
+    const puasaHariIni = data.puasa.days[data.hariRamadhan - 1];
+    const puasaPct  = puasaHariIni ? 100 : 0;
+    const puasaDone = data.puasa.days.filter(Boolean).length;
+
+    const dzikirDone = Object.values(data.dzikir).filter(Boolean).length;
+    const dzikirPct  = Math.round((dzikirDone / 4) * 100);
+
+    const overall = Math.round((shalatPct + quranPct + puasaPct + dzikirPct) / 4);
+
+    const bar  = document.getElementById("summary-bar");
+    const pct  = document.getElementById("summary-pct");
+    const mot  = document.getElementById("summary-motivasi");
+    const det  = document.getElementById("summary-detail");
+
+    if (bar) bar.style.width = overall + "%";
+    if (pct) pct.textContent = overall + "%";
+    if (det) det.textContent =
+      "Shalat " + shalatDone + "/5 · Quran " + quranPct + "% · Puasa " + puasaDone + "/30 · Dzikir " + dzikirDone + "/4";
+    if (mot) {
+      mot.className = "motivasi-badge " + motivasiClass(overall);
+      if (overall >= 100) mot.textContent = "MasyaAllah!";
+      else if (overall >= 60) mot.textContent = "Cukup baik";
+      else if (overall >= 30) mot.textContent = "Terus tingkatkan";
+      else mot.textContent = "Belum optimal";
+    }
+  }
+
+  /* ------ SHALAT ------ */
+  function renderShalat() {
+    const items = document.querySelectorAll("#shalat-list .shalat-item");
+    items.forEach(item => {
+      const key = item.dataset.shalat;
+      item.classList.toggle("checked", !!data.shalat[key]);
+      item.setAttribute("aria-checked", String(!!data.shalat[key]));
+    });
+    const done = Object.values(data.shalat).filter(Boolean).length;
+    const pct  = Math.round((done / 5) * 100);
+    const bar  = document.getElementById("shalat-bar");
+    const cnt  = document.getElementById("shalat-count");
+    const p    = document.getElementById("shalat-pct");
+    const st   = document.getElementById("shalat-status");
+    if (bar) bar.style.width = pct + "%";
+    if (cnt) cnt.textContent = done + " / 5";
+    if (p)   p.textContent   = pct + "%";
+    setMotivasi(st, pct, shalatMotivasi);
+  }
+
+  document.querySelectorAll("#shalat-list .shalat-item").forEach(item => {
+    const toggle = () => {
+      const key = item.dataset.shalat;
+      data.shalat[key] = !data.shalat[key];
+      renderShalat();
+      updateSummary();
+    };
+    item.addEventListener("click", toggle);
+    item.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); }});
+  });
+
+  document.getElementById("save-shalat")?.addEventListener("click", () => save("shalat"));
+
+  /* ------ QURAN ------ */
+  function renderQuran() {
+    const target  = parseInt(data.quran.target)  || 0;
+    const dibaca  = parseInt(data.quran.dibaca)  || 0;
+    const selesai = !!data.quran.selesai;
+    const pct     = target > 0 ? Math.min(Math.round((dibaca / target) * 100), 100) : 0;
+    const finalPct = selesai ? 100 : pct;
+
+    const tEl = document.getElementById("quran-target");
+    const dEl = document.getElementById("quran-dibaca");
+    if (tEl && !tEl.matches(":focus")) tEl.value = target || "";
+    if (dEl && !dEl.matches(":focus")) dEl.value = dibaca || "";
+
+    const toggle = document.getElementById("quran-selesai-toggle");
+    if (toggle) {
+      toggle.classList.toggle("checked", selesai);
+      toggle.setAttribute("aria-checked", String(selesai));
+    }
+
+    const bar  = document.getElementById("quran-bar");
+    const disp = document.getElementById("quran-pct-display");
+    const info = document.getElementById("quran-pages-info");
+    const st   = document.getElementById("quran-status");
+    if (bar)  bar.style.width      = finalPct + "%";
+    if (disp) disp.textContent     = finalPct + "%";
+    if (info) info.textContent     = dibaca + " dari " + (target || "—") + " halaman";
+    setMotivasi(st, finalPct, quranMotivasi);
+  }
+
+  document.getElementById("quran-target")?.addEventListener("input", e => {
+    data.quran.target = parseInt(e.target.value) || 0;
+    renderQuran();
+  });
+  document.getElementById("quran-dibaca")?.addEventListener("input", e => {
+    data.quran.dibaca = parseInt(e.target.value) || 0;
+    renderQuran();
+  });
+
+  const qSelesai = document.getElementById("quran-selesai-toggle");
+  if (qSelesai) {
+    const tog = () => {
+      data.quran.selesai = !data.quran.selesai;
+      renderQuran();
+      updateSummary();
+    };
+    qSelesai.addEventListener("click", tog);
+    qSelesai.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); tog(); }});
+  }
+
+  document.getElementById("save-quran")?.addEventListener("click", () => {
+    const t = document.getElementById("quran-target");
+    const d = document.getElementById("quran-dibaca");
+    if (t) data.quran.target = parseInt(t.value) || 0;
+    if (d) data.quran.dibaca = parseInt(d.value) || 0;
+    save("quran");
+  });
+
+  /* ------ PUASA ------ */
+  function buildCalendar() {
+    const cal = document.getElementById("puasa-calendar");
+    if (!cal) return;
+    cal.innerHTML = "";
+    for (let i = 1; i <= 30; i++) {
+      const d = document.createElement("div");
+      d.className = "puasa-day";
+      d.setAttribute("role", "checkbox");
+      d.setAttribute("aria-label", "Hari ke-" + i);
+      d.setAttribute("tabindex", "0");
+      d.dataset.day = i;
+      if (data.puasa.days[i-1]) d.classList.add("done");
+      if (i === data.hariRamadhan) d.classList.add("today");
+
+      if (data.puasa.days[i-1]) {
+        // checkmark SVG
+        d.innerHTML = '<svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>';
+      } else {
+        d.textContent = i;
+      }
+
+      const toggle = () => {
+        data.puasa.days[i-1] = !data.puasa.days[i-1];
+        buildCalendar();
+        renderPuasa();
+        updateSummary();
+      };
+      d.addEventListener("click", toggle);
+      d.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); }});
+      cal.appendChild(d);
+    }
+  }
+
+  function renderPuasa() {
+    const done = data.puasa.days.filter(Boolean).length;
+    const pct  = Math.round((done / 30) * 100);
+    const bar  = document.getElementById("puasa-bar");
+    const disp = document.getElementById("puasa-count-display");
+    const p    = document.getElementById("puasa-pct");
+    const st   = document.getElementById("puasa-status");
+    const hr   = document.getElementById("hari-ramadhan");
+    const hr2  = document.getElementById("hari-ramadhan-2");
+    if (bar)  bar.style.width   = pct + "%";
+    if (disp) disp.textContent  = done + " / 30";
+    if (p)    p.textContent     = pct + "%";
+    if (hr)   hr.textContent    = data.hariRamadhan;
+    if (hr2)  hr2.textContent   = data.hariRamadhan;
+    setMotivasi(st, pct, puasaMotivasi);
+
+    const todayTog = document.getElementById("puasa-today-toggle");
+    const todayDone = data.puasa.days[data.hariRamadhan - 1];
+    if (todayTog) {
+      todayTog.classList.toggle("checked", !!todayDone);
+      todayTog.setAttribute("aria-checked", String(!!todayDone));
+    }
+  }
+
+  const ptToggle = document.getElementById("puasa-today-toggle");
+  if (ptToggle) {
+    const tog = () => {
+      const idx = data.hariRamadhan - 1;
+      data.puasa.days[idx] = !data.puasa.days[idx];
+      buildCalendar();
+      renderPuasa();
+      updateSummary();
+    };
+    ptToggle.addEventListener("click", tog);
+    ptToggle.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); tog(); }});
+  }
+
+  document.getElementById("save-puasa")?.addEventListener("click", () => save("puasa"));
+
+  /* ------ DZIKIR ------ */
+  function renderDzikir() {
+    const items = document.querySelectorAll("#dzikir-list .shalat-item");
+    items.forEach(item => {
+      const key = item.dataset.dzikir;
+      item.classList.toggle("checked", !!data.dzikir[key]);
+      item.setAttribute("aria-checked", String(!!data.dzikir[key]));
+    });
+    const done = Object.values(data.dzikir).filter(Boolean).length;
+    const pct  = Math.round((done / 4) * 100);
+    const bar  = document.getElementById("dzikir-bar");
+    const disp = document.getElementById("dzikir-pct-display");
+    const info = document.getElementById("dzikir-info");
+    const st   = document.getElementById("dzikir-status");
+    if (bar)  bar.style.width  = pct + "%";
+    if (disp) disp.textContent = pct + "%";
+    if (info) info.textContent = done + " dari 4 dzikir";
+    setMotivasi(st, pct, dzikirMotivasi);
+  }
+
+  document.querySelectorAll("#dzikir-list .shalat-item").forEach(item => {
+    const toggle = () => {
+      const key = item.dataset.dzikir;
+      data.dzikir[key] = !data.dzikir[key];
+      renderDzikir();
+      updateSummary();
+    };
+    item.addEventListener("click", toggle);
+    item.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); }});
+  });
+
+  document.getElementById("save-dzikir")?.addEventListener("click", () => save("dzikir"));
+
+  /* ------ TABS ------ */
+  document.querySelectorAll(".ibadah-tab").forEach(tab => {
+    tab.addEventListener("click", () => {
+      document.querySelectorAll(".ibadah-tab").forEach(t => {
+        t.classList.remove("active");
+        t.setAttribute("aria-selected", "false");
+      });
+      document.querySelectorAll(".ibadah-panel").forEach(p => p.classList.remove("active"));
+      tab.classList.add("active");
+      tab.setAttribute("aria-selected", "true");
+      const panel = document.getElementById("panel-" + tab.dataset.tab);
+      if (panel) panel.classList.add("active");
+    });
+  });
+
+  /* ------ INIT RENDER ------ */
+  buildCalendar();
+  renderShalat();
+  renderQuran();
+  renderPuasa();
+  renderDzikir();
+  updateSummary();
+}
+
 /* ================================================
    BOOT
    ================================================ */
@@ -318,4 +875,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   initSmoothScroll();
   initSectionHighlight();
   initZikir();
+  initZakat();
+  initTheme();
+  initIbadah();
 });
