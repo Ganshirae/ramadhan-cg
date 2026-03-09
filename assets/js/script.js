@@ -527,12 +527,12 @@ function initIbadah() {
   const TODAY = new Date().toDateString();
   const STORE_KEY = "ramadhan-ibadah-" + TODAY;
 
-  // Hitung hari Ramadhan 1447H otomatis (mulai 18 Februari 2026)
-  const RAMADHAN_START = new Date("2026-02-18T00:00:00");
+  // Hitung hari Ramadhan 1447H otomatis (mulai 1 Maret 2026)
+  const RAMADHAN_START = new Date("2026-03-01T00:00:00");
   const now = new Date();
   const diffMs   = now - RAMADHAN_START;
   const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-  const autoHari = Math.min(Math.max(diffDays, 1), 30);
+  const autoHari = Math.min(Math.max(diffDays + 1, 1), 30);
 
   // Load data harian – puasa.days disimpan terpisah agar persist lintas hari
   const PUASA_KEY = "ramadhan-puasa-days";
@@ -859,6 +859,218 @@ function initIbadah() {
   updateSummary();
 }
 
+
+/* ================================================
+   IMSAKIYAH
+   ================================================ */
+function initImsakiyah() {
+  if (window.CURRENT_PAGE !== "imsakiyah") return;
+
+  const API_BASE = "https://api.myquran.com/v2/sholat/jadwal";
+  const NAMA_BULAN = ["Januari","Februari","Maret","April","Mei","Juni",
+                      "Juli","Agustus","September","Oktober","November","Desember"];
+
+  const now        = new Date();
+  let currentKota  = "";
+  let currentTahun = now.getFullYear();
+  let currentBulan = now.getMonth() + 1; // 1-based
+  const todayDate  = now.toISOString().split("T")[0]; // "2026-03-06"
+
+  /* -- DOM refs -- */
+  const kotaSelect   = document.getElementById("kota-select");
+  const bulanLabel   = document.getElementById("bulan-label");
+  const btnPrev      = document.getElementById("btn-prev-bulan");
+  const btnNext      = document.getElementById("btn-next-bulan");
+  const lokasiInfo   = document.getElementById("lokasi-info");
+  const lokasiNama   = document.getElementById("lokasi-nama");
+  const lokasiDaerah = document.getElementById("lokasi-daerah");
+  const tabelTitle   = document.getElementById("tabel-title");
+  const tabelSub     = document.getElementById("tabel-subtitle");
+  const tbody        = document.getElementById("jadwal-tbody");
+  const todaySection = document.getElementById("today-section");
+  const todayStrip   = document.getElementById("today-strip");
+  const todayTgl     = document.getElementById("today-tanggal");
+  const errorDetail  = document.getElementById("error-detail");
+  const btnRetry     = document.getElementById("btn-retry");
+
+  /* -- State helpers -- */
+  function setState(state) {
+    ["loading","error","empty","table"].forEach(s => {
+      const el = document.getElementById("state-" + s);
+      if (el) el.classList.toggle("hidden", s !== state);
+    });
+  }
+
+  function updateBulanLabel() {
+    bulanLabel.textContent = NAMA_BULAN[currentBulan - 1] + " " + currentTahun;
+  }
+
+  function updateNavButtons() {
+    // Limit: Jan currentTahun to Dec currentTahun+1
+    const minReached = currentTahun === now.getFullYear() && currentBulan === 1;
+    const maxReached = currentBulan === 12 && currentTahun > now.getFullYear();
+    btnPrev.disabled = minReached;
+    btnNext.disabled = maxReached;
+  }
+
+  /* -- Render today strip -- */
+  function renderTodayStrip(jadwalList) {
+    const todayRow = jadwalList.find(j => j.date === todayDate);
+    if (!todayRow) { todaySection.classList.add("hidden"); return; }
+
+    todaySection.classList.remove("hidden");
+    todayTgl.textContent = todayRow.tanggal;
+
+    const cols = [
+      { label:"Imsak",   val: todayRow.imsak },
+      { label:"Subuh",   val: todayRow.subuh },
+      { label:"Dzuhur",  val: todayRow.dzuhur },
+      { label:"Ashar",   val: todayRow.ashar },
+      { label:"Maghrib", val: todayRow.maghrib },
+      { label:"Isya",    val: todayRow.isya },
+    ];
+
+    todayStrip.innerHTML = cols.map(c =>
+      `<div class="today-strip-item">
+        <p class="today-strip-label">${c.label}</p>
+        <p class="today-strip-time">${c.val}</p>
+      </div>`
+    ).join("");
+  }
+
+  /* -- Render tabel -- */
+  function renderTable(jadwalList) {
+    tbody.innerHTML = "";
+    jadwalList.forEach(row => {
+      const isToday = row.date === todayDate;
+      const tr = document.createElement("tr");
+      if (isToday) tr.classList.add("today-row");
+
+      const tglCell = isToday
+        ? `${row.tanggal}<span class="today-badge">Hari ini</span>`
+        : row.tanggal;
+
+      tr.innerHTML =
+        `<td>${tglCell}</td>` +
+        `<td>${row.imsak}</td>` +
+        `<td>${row.subuh}</td>` +
+        `<td>${row.dzuhur}</td>` +
+        `<td>${row.ashar}</td>` +
+        `<td>${row.maghrib}</td>` +
+        `<td>${row.isya}</td>`;
+
+      tbody.appendChild(tr);
+    });
+
+    // Auto scroll to today row
+    const todayTr = tbody.querySelector(".today-row");
+    if (todayTr) {
+      setTimeout(() => todayTr.scrollIntoView({ behavior: "smooth", block: "nearest" }), 300);
+    }
+  }
+
+  /* -- Fetch data -- */
+  async function fetchJadwal() {
+    if (!currentKota) return;
+
+    setState("loading");
+    todaySection.classList.add("hidden");
+    tabelSub.textContent = "Memuat data...";
+
+    const url = `${API_BASE}/${currentKota}/${currentTahun}/${String(currentBulan).padStart(2,"0")}`;
+
+    try {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      const json = await res.json();
+
+      if (!json.status || !json.data || !json.data.jadwal) {
+        throw new Error("Format data tidak sesuai");
+      }
+
+      const { lokasi, daerah, jadwal } = json.data;
+
+      // Update lokasi info
+      lokasiNama.textContent   = lokasi || "";
+      lokasiDaerah.textContent = daerah || "";
+      lokasiInfo.classList.remove("hidden");
+
+      // Update tabel title
+      tabelTitle.textContent = "Jadwal Imsakiyah " + NAMA_BULAN[currentBulan - 1];
+      tabelSub.textContent   = jadwal.length + " hari";
+
+      renderTodayStrip(jadwal);
+      renderTable(jadwal);
+      setState("table");
+
+    } catch (err) {
+      console.error("[Imsakiyah] fetch error:", err);
+      if (errorDetail) errorDetail.textContent = err.message || "Periksa koneksi internet dan coba kembali.";
+      setState("error");
+      tabelSub.textContent = "Gagal memuat";
+    }
+  }
+
+  /* -- Event listeners -- */
+  kotaSelect.addEventListener("change", () => {
+    currentKota = kotaSelect.value;
+    if (!currentKota) {
+      setState("empty");
+      lokasiInfo.classList.add("hidden");
+      todaySection.classList.add("hidden");
+      bulanLabel.textContent = "Pilih kota";
+      btnPrev.disabled = true;
+      btnNext.disabled = true;
+      return;
+    }
+    // Reset to current month when city changes
+    currentTahun = now.getFullYear();
+    currentBulan = now.getMonth() + 1;
+    updateBulanLabel();
+    updateNavButtons();
+    btnPrev.disabled = false;
+    btnNext.disabled = false;
+    fetchJadwal();
+  });
+
+  btnPrev.addEventListener("click", () => {
+    if (currentBulan === 1) { currentBulan = 12; currentTahun--; }
+    else { currentBulan--; }
+    updateBulanLabel();
+    updateNavButtons();
+    fetchJadwal();
+  });
+
+  btnNext.addEventListener("click", () => {
+    if (currentBulan === 12) { currentBulan = 1; currentTahun++; }
+    else { currentBulan++; }
+    updateBulanLabel();
+    updateNavButtons();
+    fetchJadwal();
+  });
+
+  btnRetry?.addEventListener("click", fetchJadwal);
+
+  /* -- Restore last kota from localStorage -- */
+  const savedKota = localStorage.getItem("imsakiyah-kota");
+  if (savedKota) {
+    kotaSelect.value = savedKota;
+    if (kotaSelect.value) {
+      currentKota = savedKota;
+      updateBulanLabel();
+      updateNavButtons();
+      btnPrev.disabled = false;
+      btnNext.disabled = false;
+      fetchJadwal();
+    }
+  }
+
+  // Save kota selection
+  kotaSelect.addEventListener("change", () => {
+    if (kotaSelect.value) localStorage.setItem("imsakiyah-kota", kotaSelect.value);
+  });
+}
+
 /* ================================================
    BOOT
    ================================================ */
@@ -878,4 +1090,5 @@ document.addEventListener("DOMContentLoaded", async () => {
   initZakat();
   initTheme();
   initIbadah();
+  initImsakiyah();
 });

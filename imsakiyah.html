@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jadwal Imsakiyah – Ramadhan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Lateef:wght@400;700&family=Playfair+Display:wght@600;700&family=Nunito:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans:   ["Nunito", "sans-serif"],
+              serif:  ["Playfair Display", "serif"],
+              arabic: ["Lateef", "Amiri", "serif"],
+            },
+          },
+        },
+      };
+    </script>
+    <link rel="stylesheet" href="assets/css/style.css" />
+  </head>
+
+  <body class="bg-green-950 text-amber-50 font-sans antialiased overflow-x-hidden">
+
+    <!-- STARFIELD -->
+    <div id="stars" class="fixed inset-0 pointer-events-none z-0" aria-hidden="true"></div>
+
+    <!-- NAVBAR -->
+    <div id="navbar-placeholder"></div>
+
+    <!-- ============================================================
+         PAGE HEADER
+         ============================================================ -->
+    <header class="relative z-10 py-12 px-4 text-center">
+      <div class="flex items-center justify-center gap-4 mb-5" aria-hidden="true">
+        <div class="h-px w-14 bg-gradient-to-r from-transparent to-yellow-500/40"></div>
+        <svg width="18" height="18" viewBox="0 0 64 64" fill="none">
+          <path d="M48 32c0 13.255-10.745 24-24 24C10.745 56 0 45.255 0 32S10.745 8 24 8c-2.21 3.89-3.5 8.393-3.5 13.2C20.5 35.46 31.04 46 44.3 46A24.2 24.2 0 0 0 48 45.7 23.9 23.9 0 0 0 48 32z" fill="#c9a94a" opacity="0.7"/>
+        </svg>
+        <div class="h-px w-14 bg-gradient-to-l from-transparent to-yellow-500/40"></div>
+      </div>
+      <h1 class="font-serif text-4xl md:text-5xl font-bold text-amber-50 animate-fade-up">
+        Jadwal <span class="text-yellow-400">Imsakiyah</span>
+      </h1>
+      <p class="mt-3 text-amber-50/50 text-sm md:text-base max-w-sm mx-auto leading-relaxed animate-fade-up" style="animation-delay:.1s">
+        Jadwal waktu shalat dan imsak Ramadhan per kota di seluruh Indonesia
+      </p>
+    </header>
+
+    <!-- ============================================================
+         MAIN
+         ============================================================ -->
+    <main class="relative z-10 max-w-4xl mx-auto px-4 pb-28">
+
+      <!-- =============================================
+           SECTION: KONTROL
+           ============================================= -->
+      <section aria-label="Pilih kota dan bulan" class="reveal mb-6">
+        <div class="bg-green-900/50 border border-yellow-500/20 rounded-3xl p-6 md:p-7">
+
+          <div class="flex flex-col sm:flex-row gap-4 items-end">
+
+            <!-- Dropdown kota -->
+            <div class="flex-1">
+              <label for="kota-select" class="zakat-label mb-2 block">
+                Pilih Kota
+                <span class="zakat-label-unit">Indonesia</span>
+              </label>
+              <div class="select-wrapper">
+                <select id="kota-select" class="kota-select" aria-label="Pilih kota untuk melihat jadwal imsakiyah">
+                  <option value="">Pilih kota...</option>
+                  <optgroup label="Jawa">
+                    <option value="1301">Jakarta</option>
+                    <option value="1209">Bandung</option>
+                    <option value="1617">Surabaya</option>
+                    <option value="1501">Yogyakarta</option>
+                    <option value="1311">Semarang</option>
+                    <option value="1404">Malang</option>
+                    <option value="1219">Depok</option>
+                    <option value="1210">Bekasi</option>
+                    <option value="1603">Tangerang</option>
+                    <option value="1213">Bogor</option>
+                  </optgroup>
+                  <optgroup label="Sumatera">
+                    <option value="1212">Medan</option>
+                    <option value="1511">Palembang</option>
+                    <option value="1101">Banda Aceh</option>
+                    <option value="1205">Batam</option>
+                    <option value="1506">Pekanbaru</option>
+                    <option value="1105">Lhokseumawe</option>
+                  </optgroup>
+                  <optgroup label="Kalimantan">
+                    <option value="1303">Balikpapan</option>
+                    <option value="1314">Banjarmasin</option>
+                    <option value="1504">Pontianak</option>
+                    <option value="1307">Samarinda</option>
+                  </optgroup>
+                  <optgroup label="Sulawesi">
+                    <option value="1408">Makassar</option>
+                    <option value="1710">Manado</option>
+                    <option value="1604">Palu</option>
+                    <option value="1406">Kendari</option>
+                  </optgroup>
+                  <optgroup label="Bali & Nusa Tenggara">
+                    <option value="1302">Denpasar</option>
+                    <option value="1413">Mataram</option>
+                    <option value="1516">Kupang</option>
+                  </optgroup>
+                  <optgroup label="Papua & Maluku">
+                    <option value="1710">Ambon</option>
+                    <option value="1502">Jayapura</option>
+                  </optgroup>
+                </select>
+                <svg class="select-arrow" width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                </svg>
+              </div>
+            </div>
+
+            <!-- Navigasi bulan -->
+            <div class="flex items-center gap-3 flex-shrink-0">
+              <button id="btn-prev-bulan" class="bulan-nav-btn" aria-label="Bulan sebelumnya" disabled>
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+                </svg>
+              </button>
+              <p id="bulan-label" class="text-sm font-bold text-amber-50/70 min-w-[110px] text-center">
+                Pilih kota
+              </p>
+              <button id="btn-next-bulan" class="bulan-nav-btn" aria-label="Bulan berikutnya" disabled>
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+                </svg>
+              </button>
+            </div>
+
+          </div>
+
+          <!-- Lokasi info -->
+          <div id="lokasi-info" class="hidden mt-4 pt-4 border-t border-yellow-500/10">
+            <p class="text-xs text-amber-50/35">
+              Menampilkan jadwal untuk:
+              <strong id="lokasi-nama" class="text-amber-50/65 font-semibold"></strong>
+              &nbsp;&middot;&nbsp;
+              <span id="lokasi-daerah" class="text-amber-50/40"></span>
+            </p>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- =============================================
+           SECTION: JADWAL HARI INI
+           ============================================= -->
+      <section id="today-section" class="hidden reveal mb-6" aria-label="Jadwal shalat hari ini">
+        <div class="bg-green-900/50 border border-yellow-500/20 rounded-3xl p-6 md:p-7">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="font-serif text-lg font-semibold text-amber-50">Hari Ini</h2>
+            <p id="today-tanggal" class="text-xs text-amber-50/40 font-medium"></p>
+          </div>
+          <div class="today-strip" id="today-strip">
+            <!-- Diisi JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- =============================================
+           SECTION: TABEL JADWAL BULANAN
+           ============================================= -->
+      <section aria-label="Tabel jadwal imsakiyah" class="reveal">
+        <div class="bg-green-900/50 border border-yellow-500/20 rounded-3xl overflow-hidden">
+
+          <!-- Table header info -->
+          <div class="px-6 py-4 border-b border-yellow-500/10 flex items-center justify-between">
+            <h2 class="font-serif text-lg font-semibold text-amber-50" id="tabel-title">
+              Jadwal Imsakiyah
+            </h2>
+            <p class="text-xs text-amber-50/30 font-medium" id="tabel-subtitle">Pilih kota untuk memulai</p>
+          </div>
+
+          <!-- Loading state -->
+          <div id="state-loading" class="hidden jadwal-loading">
+            <div class="jadwal-loading-spinner"></div>
+            <p class="jadwal-loading-text">Memuat data jadwal...</p>
+          </div>
+
+          <!-- Error state -->
+          <div id="state-error" class="hidden p-6">
+            <div class="jadwal-error">
+              <p class="jadwal-error-title">Gagal memuat data</p>
+              <p class="jadwal-error-msg" id="error-detail">Periksa koneksi internet dan coba kembali.</p>
+              <button id="btn-retry" class="mt-4 px-5 py-2 rounded-xl text-xs font-semibold border border-yellow-500/25 text-amber-50/50 hover:border-yellow-500/50 hover:text-amber-50/80 transition-all">
+                Coba Lagi
+              </button>
+            </div>
+          </div>
+
+          <!-- Empty state -->
+          <div id="state-empty" class="jadwal-empty">
+            <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.2" viewBox="0 0 24 24" class="text-amber-50/15 mx-auto mb-3">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5"/>
+            </svg>
+            <p class="jadwal-empty-text">Pilih kota untuk menampilkan jadwal imsakiyah</p>
+          </div>
+
+          <!-- Tabel jadwal -->
+          <div id="state-table" class="hidden">
+            <div class="jadwal-table-wrap">
+              <table class="jadwal-table" aria-label="Tabel jadwal imsakiyah bulanan">
+                <thead>
+                  <tr>
+                    <th scope="col">Tanggal</th>
+                    <th scope="col">Imsak</th>
+                    <th scope="col">Subuh</th>
+                    <th scope="col">Dzuhur</th>
+                    <th scope="col">Ashar</th>
+                    <th scope="col">Maghrib</th>
+                    <th scope="col">Isya</th>
+                  </tr>
+                </thead>
+                <tbody id="jadwal-tbody">
+                  <!-- Diisi JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <div id="footer-placeholder"></div>
+
+    <script>window.CURRENT_PAGE = "imsakiyah";</script>
+    <script src="assets/js/script.js"></script>
+  </body>
+</html>
