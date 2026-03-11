@@ -1,183 +1,134 @@
 <!-- ============================================
      components/header.html
-     Ramadhan – Hero Section (Home)
+     Ramadhan Portal – Hero Section
      ============================================ -->
 <header
-  class="relative z-10 min-h-[88vh] flex flex-col items-center justify-center px-4 text-center overflow-hidden pt-8 pb-16"
+  id="hero-header"
+  class="relative z-10 flex flex-col overflow-hidden"
+  style="min-height: 100vh;"
+  role="banner"
 >
-  <!-- Glow blob -->
-  <div
-    class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full pointer-events-none"
-    style="
-      background: radial-gradient(
-        circle,
-        rgba(201, 169, 74, 0.08) 0%,
-        transparent 70%
-      );
-    "
-    aria-hidden="true"
-  ></div>
 
-  <!-- Moon + decorative stars -->
-  <div class="relative mb-8 animate-fade-in" aria-hidden="true">
-    <div class="absolute inset-0 flex items-center justify-center">
-      <div
-        class="w-24 h-24 rounded-full"
-        style="
-          background: radial-gradient(
-            circle,
-            rgba(201, 169, 74, 0.3) 0%,
-            transparent 70%
-          );
-        "
-      ></div>
-    </div>
-    <div
-      class="absolute -top-3 -right-4 text-yellow-400/60 text-xs animate-star-pulse"
-    >
-      ✦
-    </div>
-    <div
-      class="absolute -bottom-2 -left-5 text-yellow-400/40 text-xs animate-star-pulse"
-      style="animation-delay: 0.8s"
-    >
-      ✦
-    </div>
-    <div
-      class="absolute top-1 -left-8 text-yellow-300/30 text-[8px] animate-star-pulse"
-      style="animation-delay: 1.4s"
-    >
-      ✦
-    </div>
-    <svg
-      width="80"
-      height="80"
-      viewBox="0 0 64 64"
-      fill="none"
-      class="relative drop-shadow-[0_0_20px_rgba(201,169,74,0.9)]"
-    >
-      <path
-        d="M48 32c0 13.255-10.745 24-24 24C10.745 56 0 45.255 0 32S10.745 8 24 8c-2.21 3.89-3.5 8.393-3.5 13.2C20.5 35.46 31.04 46 44.3 46A24.2 24.2 0 0 0 48 45.7 23.9 23.9 0 0 0 48 32z"
-        fill="#c9a94a"
-      />
-    </svg>
+  <!-- ── 1. Background image ── -->
+  <div id="hero-bg-img"
+       class="absolute inset-0 pointer-events-none select-none"
+       style="
+         background-image: url('assets/img/hero-bg.png');
+         background-size: cover;
+         background-position: center 25%;
+         background-repeat: no-repeat;
+         z-index: 0;
+       "
+       aria-hidden="true">
   </div>
 
-  <!-- Bismillah -->
-  <p
-    class="arabic-text text-yellow-400/80 text-2xl mb-4 animate-fade-in"
-    style="animation-delay: 0.2s; direction: rtl; text-align: center"
-    lang="ar"
-  >
-    بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ
-  </p>
+  <!-- ── 2. Theme color overlay (diupdate oleh JS) ── -->
+  <div id="hero-overlay"
+       class="absolute inset-0 pointer-events-none transition-all duration-700"
+       aria-hidden="true"
+       style="z-index: 1;">
+  </div>
 
-  <!-- Main Title -->
-  <h1
-    class="font-serif font-bold text-amber-50 animate-fade-up leading-tight"
-    style="animation-delay: 0.3s; font-size: clamp(2.5rem, 8vw, 5rem)"
-  >
-    Selamat Datang di<br />
-    <span class="text-yellow-400">Ramadhan</span>
-    <span class="text-amber-50/80"> Kareem</span>
-  </h1>
+  <!-- ── 3. Bottom fade ke warna background body ── -->
+  <div id="hero-fade-bottom"
+       class="absolute bottom-0 left-0 right-0 pointer-events-none"
+       style="height: 260px; z-index: 2;"
+       aria-hidden="true">
+  </div>
 
-  <!-- Arabic subtitle -->
-  <p
-    class="arabic-text text-yellow-400/60 text-3xl mt-3 animate-fade-in"
-    style="animation-delay: 0.4s; direction: rtl; text-align: center"
-    lang="ar"
-  >
-    رَمَضَان كَرِيم
-  </p>
+  <!-- ── 4. Vignette sisi kiri & kanan ── -->
+  <div class="absolute inset-0 pointer-events-none" aria-hidden="true"
+       style="
+         background: radial-gradient(ellipse 120% 100% at center, transparent 35%, rgba(0,0,0,0.45) 100%);
+         z-index: 2;
+       "></div>
 
-  <!-- Description -->
-  <p
-    class="mt-5 text-amber-50/55 text-sm md:text-base max-w-lg mx-auto leading-relaxed animate-fade-up"
-    style="animation-delay: 0.5s"
-  >
-    Temani ibadah Ramadhanmu dengan koleksi doa harian dan penghitung zikir
-    interaktif. Semoga ibadah kita diterima Allah SWT.
-  </p>
+  <!-- ── 5. KONTEN UTAMA ── -->
+  <div class="relative flex flex-col items-center justify-center flex-1 text-center px-5"
+       style="z-index: 3; padding-top: 120px; padding-bottom: 80px; min-height: 100vh;">
 
-  <!-- CTA Buttons -->
-  <div
-    class="mt-10 flex flex-col sm:flex-row gap-4 justify-center animate-fade-up"
-    style="animation-delay: 0.6s"
-  >
-    <a
-      href="doa.html"
-      class="group flex items-center justify-center gap-2 px-8 py-3.5 rounded-full bg-yellow-400 text-green-950 text-sm font-bold hover:bg-yellow-300 transition-all duration-300 shadow-[0_0_20px_rgba(201,169,74,0.35)] hover:shadow-[0_0_30px_rgba(201,169,74,0.6)]"
-    >
-      <span>Lihat Doa Ramadhan</span>
-      <svg
-        class="w-4 h-4 group-hover:translate-x-1 transition-transform"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M9 5l7 7-7 7"
-        />
+    <!-- Bismillah -->
+    <p class="arabic-text text-yellow-300/75 animate-fade-in mb-2"
+       style="animation-delay:.05s; direction:rtl; text-align:center; font-size:clamp(1.1rem,2.5vw,1.5rem);"
+       lang="ar">
+      بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ
+    </p>
+
+    <!-- Ornament -->
+    <div class="flex items-center justify-center gap-3 my-4 animate-fade-in w-56"
+         style="animation-delay:.12s;" aria-hidden="true">
+      <div class="h-px flex-1" style="background:linear-gradient(90deg,transparent,rgba(201,169,74,0.55));"></div>
+      <svg width="13" height="13" viewBox="0 0 64 64" fill="none" style="flex-shrink:0;">
+        <path d="M48 32c0 13.255-10.745 24-24 24C10.745 56 0 45.255 0 32S10.745 8 24 8c-2.21 3.89-3.5 8.393-3.5 13.2C20.5 35.46 31.04 46 44.3 46A24.2 24.2 0 0 0 48 45.7 23.9 23.9 0 0 0 48 32z" fill="#c9a94a" opacity="0.8"/>
       </svg>
-    </a>
-    <a
-      href="zikir.html"
-      class="group flex items-center justify-center gap-2 px-8 py-3.5 rounded-full border border-green-500/50 text-green-300 text-sm font-bold hover:bg-green-800/50 hover:border-green-400 transition-all duration-300"
-    >
-      <span>Mulai Hitung Zikir</span>
-    </a>
-  </div>
+      <div class="h-px flex-1" style="background:linear-gradient(90deg,rgba(201,169,74,0.55),transparent);"></div>
+    </div>
 
-  <!-- Feature mini cards -->
-  <div
-    class="mt-16 grid grid-cols-2 md:grid-cols-3 gap-4 max-w-2xl mx-auto w-full animate-fade-up"
-    style="animation-delay: 0.7s"
-  >
-    <a
-      href="doa.html#sahur"
-      class="feature-mini-card bg-green-900/40 border border-yellow-500/15 rounded-2xl p-4 text-center hover:border-yellow-500/40 transition-all"
-    >
-      <p class="text-xs font-semibold text-yellow-400">Doa Sahur</p>
-      <p class="text-xs text-amber-50/40 mt-0.5">3 doa pilihan</p>
-    </a>
-    <a
-      href="doa.html#buka-puasa"
-      class="feature-mini-card bg-green-900/40 border border-green-500/15 rounded-2xl p-4 text-center hover:border-green-500/40 transition-all"
-    >
-      <p class="text-xs font-semibold text-green-400">Buka Puasa</p>
-      <p class="text-xs text-amber-50/40 mt-0.5">3 doa pilihan</p>
-    </a>
-    <a
-      href="zikir.html"
-      class="feature-mini-card bg-green-900/40 border border-amber-500/15 rounded-2xl p-4 text-center col-span-2 md:col-span-1 hover:border-amber-500/40 transition-all"
-    >
-      <p class="text-xs font-semibold text-amber-400">Hitung Zikir</p>
-      <p class="text-xs text-amber-50/40 mt-0.5">Target 33 &amp; 100</p>
-    </a>
-  </div>
+    <!-- Heading utama -->
+    <div class="mb-4 animate-fade-up" style="animation-delay:.2s;">
+      <h1 class="font-serif font-bold text-amber-50 leading-none"
+          style="font-size:clamp(3.5rem,11vw,7rem); text-shadow:0 2px 40px rgba(0,0,0,0.7), 0 0 80px rgba(0,0,0,0.4);">
+        Ramadhan
+      </h1>
+      <h2 class="font-serif font-bold text-yellow-400 leading-tight"
+          style="font-size:clamp(2.2rem,7.5vw,4.8rem); text-shadow:0 2px 24px rgba(201,169,74,0.6), 0 0 60px rgba(0,0,0,0.5);">
+        Kareem
+      </h2>
+    </div>
 
-  <!-- Scroll indicator -->
-  <div
-    class="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-amber-50/25 animate-bounce-slow"
-    aria-hidden="true"
-  >
-    <svg
-      width="16"
-      height="16"
-      fill="none"
-      stroke="currentColor"
-      viewBox="0 0 24 24"
-    >
-      <path
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
-        d="M19 9l-7 7-7-7"
-      />
-    </svg>
+    <!-- Arabic subtitle -->
+    <p class="arabic-text text-yellow-300/50 mb-5 animate-fade-in"
+       style="animation-delay:.3s; direction:rtl; text-align:center; font-size:clamp(1.3rem,3.5vw,1.9rem);"
+       lang="ar">
+      رَمَضَان كَرِيم
+    </p>
+
+    <!-- Deskripsi -->
+    <p class="text-amber-50/55 leading-relaxed animate-fade-up mb-9"
+       style="animation-delay:.38s; font-size:clamp(.82rem,1.8vw,.92rem); max-width:420px; line-height:1.8;">
+      Portal ibadah Ramadhan — jadwal imsakiyah, doa harian,
+      penghitung zikir, kalkulator zakat, dan checklist ibadah.
+    </p>
+
+    <!-- CTA Buttons — max-width proporsional, tidak terlalu lebar -->
+    <div class="flex flex-col sm:flex-row gap-3 animate-fade-up mb-7"
+         style="animation-delay:.46s; width:100%; max-width:360px;">
+      <a href="imsakiyah.html"
+         class="group flex items-center justify-center gap-2 py-3.5 rounded-full font-bold text-green-950 text-sm transition-all duration-300 flex-1"
+         style="background:linear-gradient(135deg,#b8942e,#c9a94a,#dfc06a);
+                box-shadow:0 4px 20px rgba(201,169,74,0.45);
+                padding-left:20px; padding-right:20px;">
+        Jadwal Imsakiyah
+        <svg class="w-4 h-4 flex-shrink-0 group-hover:translate-x-1 transition-transform"
+             fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
+        </svg>
+      </a>
+      <a href="ibadah.html"
+         class="hero-cta-outline flex items-center justify-center gap-2 py-3.5 rounded-full text-sm font-bold transition-all duration-300 flex-1"
+         style="padding-left:20px; padding-right:20px;">
+        Pantau Ibadah
+      </a>
+    </div>
+
+    <!-- Quick-nav pills -->
+    <div class="flex flex-wrap justify-center gap-2 animate-fade-up" style="animation-delay:.54s;">
+      <a href="doa.html"       class="hero-pill">Doa Harian</a>
+      <a href="zikir.html"     class="hero-pill">Zikir</a>
+      <a href="zakat.html"     class="hero-pill">Zakat</a>
+      <a href="imsakiyah.html" class="hero-pill">Imsakiyah</a>
+      <a href="ibadah.html"    class="hero-pill">Ibadah</a>
+    </div>
+
+    <!-- Scroll cue -->
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 animate-bounce-slow"
+         aria-hidden="true"
+         style="color:rgba(254,243,199,0.18);">
+      <span style="font-size:.58rem; font-weight:700; letter-spacing:.18em; text-transform:uppercase;">Jelajahi</span>
+      <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+      </svg>
+    </div>
+
   </div>
 </header>

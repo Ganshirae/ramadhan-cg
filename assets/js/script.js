@@ -475,6 +475,46 @@ function initTheme() {
   const THEMES = ["malam","sahur","pasir","madinah","fajar"];
   const saved  = localStorage.getItem("ramadhan-theme") || "malam";
 
+  // Warna overlay hero per tema — disesuaikan agar gambar tetap terlihat
+  // tapi nuansa warna body tema meresap ke hero
+  const HERO_OVERLAYS = {
+    malam:   { // Hijau gelap
+      top:    "rgba(3, 30, 14, 0.62)",
+      mid:    "rgba(5, 46, 22, 0.48)",
+      low:    "rgba(3, 28, 12, 0.78)",
+      bottom: "rgba(5, 46, 22, 1.0)",
+      vignette: "rgba(2, 20, 10, 0.5)",
+    },
+    sahur:   { // Navy biru – langit malam menjelang sahur
+      top:    "rgba(5, 10, 40, 0.65)",
+      mid:    "rgba(8, 18, 60, 0.50)",
+      low:    "rgba(5, 10, 40, 0.80)",
+      bottom: "rgba(12, 20, 69, 1.0)",
+      vignette: "rgba(3, 8, 30, 0.5)",
+    },
+    pasir:   { // Coklat hangat – padang pasir
+      top:    "rgba(28, 12, 4, 0.62)",
+      mid:    "rgba(40, 20, 6, 0.48)",
+      low:    "rgba(25, 10, 2, 0.80)",
+      bottom: "rgba(28, 16, 8, 1.0)",
+      vignette: "rgba(18, 8, 2, 0.5)",
+    },
+    madinah: { // Ungu marun dalam
+      top:    "rgba(20, 5, 30, 0.65)",
+      mid:    "rgba(30, 8, 45, 0.50)",
+      low:    "rgba(20, 5, 30, 0.80)",
+      bottom: "rgba(21, 10, 30, 1.0)",
+      vignette: "rgba(12, 3, 20, 0.5)",
+    },
+    fajar:   { // Teal gelap – menjelang fajar
+      top:    "rgba(3, 22, 24, 0.62)",
+      mid:    "rgba(5, 35, 38, 0.48)",
+      low:    "rgba(3, 20, 22, 0.80)",
+      bottom: "rgba(7, 30, 32, 1.0)",
+      vignette: "rgba(2, 14, 16, 0.5)",
+    },
+  };
+
   function applyTheme(t) {
     document.body.classList.remove(...THEMES.map(x => "theme-" + x));
     document.body.classList.add("theme-" + t);
@@ -482,6 +522,23 @@ function initTheme() {
     document.querySelectorAll(".theme-option").forEach(el => {
       el.classList.toggle("active", el.dataset.theme === t);
     });
+
+    // Update hero overlay warna sesuai tema
+    const ov = HERO_OVERLAYS[t] || HERO_OVERLAYS.malam;
+    const overlay = document.getElementById("hero-overlay");
+    const fadeBot = document.getElementById("hero-fade-bottom");
+    if (overlay) {
+      overlay.style.background = `linear-gradient(
+        to bottom,
+        ${ov.top}   0%,
+        ${ov.mid}  40%,
+        ${ov.low}  72%,
+        ${ov.bottom} 100%
+      )`;
+    }
+    if (fadeBot) {
+      fadeBot.style.background = `linear-gradient(to bottom, transparent 0%, ${ov.bottom} 100%)`;
+    }
   }
 
   applyTheme(saved);

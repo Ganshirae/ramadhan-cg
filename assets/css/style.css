@@ -1139,3 +1139,248 @@ body.theme-fajar { background-color: #071e20; }
   opacity: 0.3;
   cursor: not-allowed;
 }
+
+/* ====================================================
+   PORTAL LANDING PAGE
+   ==================================================== */
+
+/* Feature cards */
+.portal-card {
+  position: relative;
+  background: rgba(4, 22, 11, 0.5);
+  border: 1px solid rgba(201, 169, 74, 0.12);
+  border-radius: 24px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+.portal-card:hover {
+  border-color: rgba(201, 169, 74, 0.28);
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.35);
+}
+
+/* Gradient accent strip at top */
+.portal-card-accent {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Icon wrap */
+.portal-card-icon-wrap {
+  position: relative;
+  z-index: 1;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  border: 1px solid;
+  background: rgba(4, 22, 11, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 22px 22px 0;
+  flex-shrink: 0;
+}
+
+/* Card body */
+.portal-card-body {
+  position: relative;
+  z-index: 1;
+  padding: 14px 22px 16px;
+  flex: 1;
+}
+.portal-card-title {
+  font-family: "Playfair Display", serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: rgba(254, 243, 199, 0.95);
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+.portal-card-desc {
+  font-size: 0.78rem;
+  color: rgba(254, 243, 199, 0.45);
+  line-height: 1.7;
+  margin-bottom: 12px;
+}
+
+/* Tags */
+.portal-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.portal-tag {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: rgba(201, 169, 74, 0.08);
+  border: 1px solid rgba(201, 169, 74, 0.15);
+  color: rgba(253, 230, 138, 0.45);
+}
+
+/* Card button */
+.portal-card-btn {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 0 22px 22px;
+  padding: 11px 16px;
+  border-radius: 12px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid rgba(201, 169, 74, 0.2);
+  color: rgba(253, 230, 138, 0.7);
+  background: rgba(201, 169, 74, 0.06);
+  text-decoration: none;
+}
+.portal-card-btn:hover {
+  background: rgba(201, 169, 74, 0.14);
+  border-color: rgba(201, 169, 74, 0.4);
+  color: #fde68a;
+}
+.portal-card-btn-green {
+  border-color: rgba(74, 222, 128, 0.2);
+  color: rgba(134, 239, 172, 0.7);
+  background: rgba(74, 222, 128, 0.05);
+}
+.portal-card-btn-green:hover {
+  background: rgba(74, 222, 128, 0.12);
+  border-color: rgba(74, 222, 128, 0.4);
+  color: #86efac;
+}
+.portal-card-btn-amber {
+  border-color: rgba(251, 191, 36, 0.2);
+  color: rgba(253, 211, 77, 0.7);
+  background: rgba(251, 191, 36, 0.05);
+}
+.portal-card-btn-amber:hover {
+  background: rgba(251, 191, 36, 0.12);
+  border-color: rgba(251, 191, 36, 0.4);
+  color: #fcd34d;
+}
+.portal-card-btn-violet {
+  border-color: rgba(196, 181, 253, 0.2);
+  color: rgba(196, 181, 253, 0.7);
+  background: rgba(196, 181, 253, 0.05);
+}
+.portal-card-btn-violet:hover {
+  background: rgba(196, 181, 253, 0.12);
+  border-color: rgba(196, 181, 253, 0.4);
+  color: #c4b5fd;
+}
+.portal-card-btn-orange {
+  border-color: rgba(251, 146, 60, 0.2);
+  color: rgba(253, 186, 116, 0.7);
+  background: rgba(251, 146, 60, 0.05);
+}
+.portal-card-btn-orange:hover {
+  background: rgba(251, 146, 60, 0.12);
+  border-color: rgba(251, 146, 60, 0.4);
+  color: #fdba74;
+}
+.portal-card-btn-teal {
+  border-color: rgba(94, 234, 212, 0.2);
+  color: rgba(94, 234, 212, 0.7);
+  background: rgba(94, 234, 212, 0.05);
+}
+.portal-card-btn-teal:hover {
+  background: rgba(94, 234, 212, 0.12);
+  border-color: rgba(94, 234, 212, 0.4);
+  color: #5eead4;
+}
+
+/* Stats cards */
+.stats-card {
+  background: rgba(4, 22, 11, 0.5);
+  border: 1px solid rgba(201, 169, 74, 0.1);
+  border-radius: 18px;
+  padding: 20px 16px;
+  text-align: center;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.stats-card:hover {
+  border-color: rgba(201, 169, 74, 0.25);
+  transform: translateY(-2px);
+}
+.stats-number {
+  font-family: "Playfair Display", serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #fde68a;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.stats-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: rgba(254, 243, 199, 0.35);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* ====================================================
+   HERO – Pills, Outline Button, Animations
+   ==================================================== */
+
+.hero-pill {
+  display: inline-block;
+  padding: 5px 14px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  background: rgba(201, 169, 74, 0.08);
+  border: 1px solid rgba(201, 169, 74, 0.22);
+  color: rgba(253, 230, 138, 0.55);
+  text-decoration: none;
+  transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.2s;
+  backdrop-filter: blur(4px);
+}
+.hero-pill:hover {
+  background: rgba(201, 169, 74, 0.16);
+  border-color: rgba(201, 169, 74, 0.45);
+  color: rgba(253, 230, 138, 0.9);
+  transform: translateY(-1px);
+}
+
+.hero-cta-outline {
+  border: 1px solid rgba(201, 169, 74, 0.38);
+  color: rgba(253, 230, 138, 0.82);
+  background: rgba(201, 169, 74, 0.07);
+  backdrop-filter: blur(8px);
+}
+.hero-cta-outline:hover {
+  background: rgba(201, 169, 74, 0.16);
+  border-color: rgba(201, 169, 74, 0.6);
+  color: #fde68a;
+  transform: translateY(-1px);
+}
+
+/* Fade animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes bounceSlow {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50%       { transform: translateX(-50%) translateY(6px); }
+}
+.animate-fade-in  { animation: fadeIn  0.7s ease both; }
+.animate-fade-up  { animation: fadeUp  0.7s ease both; }
+.animate-bounce-slow { animation: bounceSlow 2.4s ease-in-out infinite; }
